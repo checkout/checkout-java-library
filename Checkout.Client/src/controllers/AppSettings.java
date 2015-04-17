@@ -9,13 +9,12 @@ import java.util.Properties;
 
 import exception.CKOException;
 
-public class AppSettings extends PropertyValidator{
+public class AppSettings{
 	
 	public static Map<String,String> propertyMap=readProperty();
 	
 	public static String baseApiUrl = propertyMap.get("baseApi");
 	public static String secretKey=propertyMap.get("secretKey");
-	public static String publicKey=propertyMap.get("publicKey");
 	public static String debugMode=propertyMap.get("debugMode");
 	public static String connectTimeout=propertyMap.get("connectTimeout");
 	public static String readTimeout=propertyMap.get("readTimeout");
@@ -35,7 +34,6 @@ public class AppSettings extends PropertyValidator{
 			
 			property.put("baseApi",prop.getProperty("baseApi"));
 			property.put("secretKey",prop.getProperty("secretKey"));
-			property.put("publicKey",prop.getProperty("publicKey"));
 			property.put("debugMode",prop.getProperty("debugMode"));
 			property.put("connectTimeout",prop.getProperty("connectTimeout"));
 			property.put("readTimeout",prop.getProperty("readTimeout"));

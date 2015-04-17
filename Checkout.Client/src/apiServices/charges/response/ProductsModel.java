@@ -8,7 +8,7 @@ public class ProductsModel {
 	public String price;
 	public String quantity;
 	public String image;
-	public String shippingcost;
-	public String trackingurl;
+	public String shippingCost;
+	public String trackingUrl;
 	
 }

@@ -2,11 +2,8 @@ package test;
 
 import java.util.*;
 
-import apiServices.cards.response.BillingDetails;
 import apiServices.cards.response.Card;
-import apiServices.charges.request.CardCharge;
 import apiServices.charges.response.ProductsModel;
-import apiServices.customers.request.CustomerCreate;
 import apiServices.sharedModels.Address;
 import apiServices.sharedModels.Phone;
 import apiServices.tokens.request.PaymentTokenCreate;
@@ -61,17 +58,17 @@ public class TestHelper {
 		 product1.description= getRandomString().substring(20);
 		 product1.name=getRandomString().substring(20);
 		 product1.quantity="1";
-		 product1.shippingcost="10";
+		 product1.shippingCost="10";
 		 product1.sku= getRandomString().substring(25);
-		 product1.trackingurl="http://www.tracker.com";
+		 product1.trackingUrl="http://www.tracker.com";
 				 
 		 ProductsModel product2  =new ProductsModel();
 		 product2.description= getRandomString().substring(20);
 		 product2.name=getRandomString().substring(20);
 		 product2.quantity="1";
-		 product2.shippingcost="20";
+		 product2.shippingCost="20";
 		 product2.sku= getRandomString().substring(25);
-		 product2.trackingurl="http://www.tracker.com";
+		 product2.trackingUrl="http://www.tracker.com";
 		 
 		 products.add(product1);
 		 products.add(product2);
@@ -98,20 +95,6 @@ public class TestHelper {
 		return phone;
 	}
 
-	public static CustomerCreate getCustomerCreateModel(){
-	
-		CustomerCreate customer = new CustomerCreate();
-		
-		customer.email = getRandomEmail();
-		customer.name = getRandomString();
-		customer.phone = getRandomPhone();		
-		customer.description = getRandomString();
-		customer.metadata = getRandomMetadata(); 
-		customer.card=getCardModel();
-		
-		return customer;
-	}
-	
 	public static Card getCardModel(){
 		Card card = new Card();
 		
@@ -141,27 +124,4 @@ public class TestHelper {
 		return tokenPayload;
 	}
 
-	public static CardCharge getCardChargeModel() {
-		CardCharge chargePayload =new CardCharge();
-		chargePayload.email = getRandomEmail();
-		chargePayload.currency="usd";
-		chargePayload.value=100;
-		chargePayload.autoCapture="N";
-		chargePayload.trackId= "TRK12345";
-		chargePayload.customerIp="82.23.168.254";
-		chargePayload.description= getRandomString().substring(20);
-		chargePayload.card =getCardModel();
-		chargePayload.metadata = getRandomMetadata();
-		chargePayload.shippingDetails = getRandomAddress();
-		chargePayload.products = getRandomProducts();
-		chargePayload.Udf1=getRandomString().substring(20);
-		chargePayload.Udf2=getRandomString().substring(20);
-		chargePayload.Udf3=getRandomString().substring(20);
-		chargePayload.Udf4=getRandomString().substring(20);
-		chargePayload.Udf5=getRandomString().substring(20);
-		
-		return  chargePayload;
-	}
-
-	
 }

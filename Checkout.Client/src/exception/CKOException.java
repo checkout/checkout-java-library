@@ -1,9 +1,7 @@
 package exception;
 
 public  class CKOException extends Exception {
-	
-	
-	
+		
 	private static final long serialVersionUID = 1L;
 
 	public CKOException(String message) {

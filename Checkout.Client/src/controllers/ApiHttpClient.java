@@ -26,6 +26,8 @@ public class ApiHttpClient {
 		
 		if(AppSettings.debugMode.equals("true")){		
 			System.out.println("**Request**  "+method+":"+uri);
+			System.out.println("");
+			System.out.println("**Payload**  "+query);
 		}
 		
 		connection = (HttpURLConnection) url.openConnection();
@@ -39,96 +41,23 @@ public class ApiHttpClient {
 		connection.setUseCaches(false);
 		connection.setInstanceFollowRedirects(true);
 
-		// set http header
 		connection.setRequestProperty("Content-Type", "application/json");
 		connection.setRequestProperty("Authorization", apiKey);		
 		connection.connect();
 	
 		if(HttpMethods.Post == method || HttpMethods.Put == method){
+			
 			OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream());
+			
 			out.write(query);
-			
-			if(AppSettings.debugMode.equals("true")){	
-				System.out.println("");
-				System.out.println("**Payload**:"+query);
-			}
-			
 			out.flush();
 			out.close();
 		}
 	}
-	
-	/* when the request content is needed for POST PUT method */
-	public void createPostConnection(String uri, String apiKey, String method,
-			String query) throws IOException {
-
-		URL url = new URL(uri);
-		
-		
-		connection = (HttpURLConnection) url.openConnection();
-
-		connection.setConnectTimeout(Integer.parseInt(AppSettings.connectTimeout) * 1000);
-		connection.setReadTimeout(Integer.parseInt(AppSettings.readTimeout) * 1000);
-
-		connection.setDoOutput(true);
-		connection.setDoInput(true);
-		connection.setRequestMethod(method); // POST¡¢PUT
-		connection.setUseCaches(false);
-		connection.setInstanceFollowRedirects(true);
-
-		// set http header
-		connection.setRequestProperty("Content-Type", "application/json");
-		connection.setRequestProperty("Authorization", apiKey);		
-		connection.connect();
-	
-		OutputStreamWriter out = new OutputStreamWriter(
-				connection.getOutputStream());
-		out.write(query);
-		
-		if(AppSettings.debugMode.equals("true")){	
-			
-			System.out.println("**Request**  "+method+":"+uri);
-			System.out.println("**Payload**:"+query);
-		}
-		
-		out.flush();
-		out.close();
-
-	}
-
-	/* when the request content is needed for Get Delete method */
-	public void createGetConnection(String uri,
-			String apiKey, String method) throws IOException {		
-
-		URL url = new URL(uri);
-		if(AppSettings.debugMode.equals("true")){	
-			
-			System.out.println("**Request**  "+method+":"+uri);
-		}
-		
-		connection = (HttpURLConnection) url.openConnection();
-
-		connection.setConnectTimeout(30 * 1000);
-		connection.setReadTimeout(80 * 1000);
-
-		connection.setDoOutput(true);
-		connection.setDoInput(true);
-		connection.setRequestMethod(method); // GET¡¢DELETE
-		connection.setUseCaches(false);
-		connection.setInstanceFollowRedirects(true);
-
-		// set http header
-		connection.setRequestProperty("Content-Type", "application/json");
-		connection.setRequestProperty("Authorization", apiKey);
-		connection.connect();		
-
-	}
 
 	public String getQuery(JSONObject js) {
 		String query = js.toString();
-
 		return query;
-
 	}
 
 	
@@ -152,7 +81,8 @@ public class ApiHttpClient {
 					json = JSONObject.fromObject(lines);
 				}				
 				if(AppSettings.debugMode.equals("true")){	
-					System.out.println("** HttpResponse - Status 200 OK**:"+json);
+					System.out.println("");
+					System.out.println("** HttpResponse**  Status 200 OK :"+json);
 				}
 				
 				jsonObject = gson.fromJson(json.toString(),type);
@@ -176,7 +106,7 @@ public class ApiHttpClient {
 				jsonResponse.httpStatus= this.httpStatus;
 				
 				if(AppSettings.debugMode.equals("true")){	
-					System.out.println("** HttpResponse --StatusError:"+jsonResponse.httpStatus+json);					
+					System.out.println("** HttpResponse**  StatusError: "+jsonResponse.httpStatus+json);					
 				}				
 				reader.close();
 			}
