@@ -1,7 +1,5 @@
 package apiServices.sharedModels;
 
-import com.google.gson.annotations.SerializedName;
-
 public class CardResponseModel {
 
 	public String id;
