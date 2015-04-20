@@ -5,10 +5,10 @@ import static org.junit.Assert.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import checkout.Checkout;
-import checkout.exception.CKOException;
-import apiServices.charges.response.Charge;
-import apiServices.sharedModels.Response;
+import com.checkout.APIClient;
+import com.checkout.apiServices.charges.response.Charge;
+import com.checkout.apiServices.sharedModels.Response;
+import com.checkout.exception.CKOException;
 
 public class ChargeServiceTests {
 	
@@ -19,7 +19,7 @@ public class ChargeServiceTests {
 	
 	@Test
 	public void testVerifyChargeByPaymentTokenRequest() throws CKOException {		
-		Checkout ckoClient= new Checkout("sk_CC937715-4F68-4306-BCBE-640B249A4D50");
+		APIClient ckoClient= new APIClient("sk_CC937715-4F68-4306-BCBE-640B249A4D50");
 
 		String paymentTken ="charge_C0D98A4D175U76BD3DE6";
 		

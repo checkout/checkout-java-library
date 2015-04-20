@@ -2,11 +2,11 @@ package test;
 
 import java.util.*;
 
-import apiServices.cards.response.Card;
-import apiServices.charges.response.ProductsModel;
-import apiServices.sharedModels.Address;
-import apiServices.sharedModels.Phone;
-import apiServices.tokens.request.PaymentTokenCreate;
+import com.checkout.apiServices.cards.response.Card;
+import com.checkout.apiServices.charges.response.ProductsModel;
+import com.checkout.apiServices.sharedModels.Address;
+import com.checkout.apiServices.sharedModels.Phone;
+import com.checkout.apiServices.tokens.request.PaymentTokenCreate;
 
 public class TestHelper {
 	

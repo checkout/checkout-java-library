@@ -5,11 +5,11 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import checkout.Checkout;
-import checkout.exception.CKOException;
-import apiServices.sharedModels.Response;
-import apiServices.tokens.request.PaymentTokenCreate;
-import apiServices.tokens.response.PaymentToken;
+import com.checkout.APIClient;
+import com.checkout.apiServices.sharedModels.Response;
+import com.checkout.apiServices.tokens.request.PaymentTokenCreate;
+import com.checkout.apiServices.tokens.response.PaymentToken;
+import com.checkout.exception.CKOException;
 
 public class ValidationError_TokensAPITest {
 
@@ -19,7 +19,7 @@ public class ValidationError_TokensAPITest {
 
 	@Test
 	public void testCreatePaymentTokenRequest_InvalidCurrency() throws CKOException {
-		Checkout ckoClient= new Checkout("sk_CC937715-4F68-4306-BCBE-640B249A4D50");
+		APIClient ckoClient= new APIClient("sk_CC937715-4F68-4306-BCBE-640B249A4D50");
 		
 		PaymentTokenCreate tokenPayload=new PaymentTokenCreate();
 		tokenPayload.value=6;
@@ -33,7 +33,7 @@ public class ValidationError_TokensAPITest {
 	
 	@Test
 	public void testCreatePaymentTokenRequest_ValidationError() throws CKOException {
-		Checkout ckoClient= new Checkout("sk_CC937715-4F68-4306-BCBE-640B249A4D50");
+		APIClient ckoClient= new APIClient("sk_CC937715-4F68-4306-BCBE-640B249A4D50");
 		
 		PaymentTokenCreate tokenPayload=new PaymentTokenCreate();
 		tokenPayload.currency="usd";
