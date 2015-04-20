@@ -15,14 +15,14 @@ import com.google.gson.JsonSyntaxException;
 
 public class TokenService {
 	
-	public Response<PaymentToken> createPaymentToken(PaymentTokenCreate cardsPayload) throws CKOException{
+	public Response<PaymentToken> createPaymentToken(PaymentTokenCreate tokenPayload) throws CKOException{
 		Response<PaymentToken> cardsResponse = null;
 		Gson gson = new Gson();
 
 		ApiHttpClient httpRequest = new ApiHttpClient();
 
 		try {
-			String payloadJson = gson.toJson(cardsPayload);
+			String payloadJson = gson.toJson(tokenPayload);
 			httpRequest.createConnection( ApiUrls.PaymentTokensApiUri,AppSettings.secretKey, HttpMethods.Post, payloadJson);
 
 			cardsResponse = httpRequest.getResponse(PaymentToken.class);
