@@ -2,6 +2,7 @@ package checkout;
 
 import java.io.IOException;
 
+import checkout.exception.CKOException;
 import checkout.helpers.ApiHttpClient;
 import checkout.helpers.AppSettings;
 import apiServices.charges.ChargeService;
@@ -26,5 +27,10 @@ public class Checkout {
 		 this.tokenService=new TokenService();
 		 this.chargeService=new ChargeService();
 		 AppSettings.secretKey=secretKey;
+	}
+	
+	public static void main(String[] args) throws CKOException
+	{
+		
 	}
 }
