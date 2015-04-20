@@ -95,7 +95,7 @@ public class Example {
 			//...
 		}else{
 			// Api has returned an error. You can access the error details with the error property on the response object.
-			// tokenResponse.error
+			// chargeResponse.error
 		}
 		
 	}
