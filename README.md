@@ -8,16 +8,18 @@ Java 1.7 and later
 
 ### How to use the library
 
-Add the latest **checkout-java-v{version number}.jar** file to your class path.
+Add the latest **checkout-java-v{version number}.jar** file to your class path. The latest JAR file for Checkout library resides in the **releases\latest\** folder of the project.
 
 ### Example
 
 Import the **checkout.java** in your code as below:   
 `import checkout.Checkout;`
 
-You will be required to set the secret key when initialising a new **Checkout** instance. You will also have option to for other configurations defined in **AppSettings.java** file. There are two constructors available for configuration:
+You will be required to set the secret key when initialising a new **Checkout** instance. You will also have option for other configurations defined in **AppSettings.java** file. There are two constructors available for configuration:
 
-`Checkout(String secretKey) or Checkout(String secretKey, boolean debugMode,int connectTimeout,int readTimeout)`
+`Checkout(String secretKey) 
+Checkout(String secretKey, boolean debugMode,int connectTimeout,int readTimeout)`
+
 If **DebugMode** is set to true, the program will log the response result to console.
 
 By default both **connectTimeout** and **readTimeout** set to 60 seconds. You got option to change them as needed.
