@@ -1,2 +1,2 @@
-# cko-java-library
+# checkout-java-library
 Java API Library
