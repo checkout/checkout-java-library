@@ -10,7 +10,7 @@ Add the latest **checkout-java-v{version number}.jar** file to your class path. 
 
 Import the **APIClient.java** in your code as below:   
 ```
-import com.checkout.APIClient;;
+import com.checkout.APIClient;
 ```
 
 You will be required to set the secret key when initialising a new **APIClient** instance. You will also have option for other configurations defined in **AppSettings.java** file. There are two constructors available for configuration:
