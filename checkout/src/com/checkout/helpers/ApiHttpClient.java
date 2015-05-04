@@ -10,126 +10,158 @@ import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
-import com.checkout.apiServices.sharedModels.Response;
-import com.checkout.apiServices.sharedModels.ResponseError;
-import com.checkout.exception.CKOException;
+import com.checkout.api.services.shared.Response;
+import com.checkout.api.services.shared.ResponseError;
+import com.checkout.api.services.token.request.PaymentTokenCreate;
+import com.checkout.api.services.token.response.PaymentToken;
 import com.checkout.utilities.HttpMethods;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 import net.sf.json.JSONObject;
 
 public class ApiHttpClient {
+	Gson gson;
 	HttpURLConnection connection = null;
 	int httpStatus = 0;
-	static Logger logger=Logger.getLogger("Log"); 
-	static FileHandler fh;
+	static Logger logger=null;
 	
-	public static FileHandler logFile() throws IOException{		  
-		SimpleFormatter formatter = new SimpleFormatter();
-		fh = new FileHandler("./ResponseLog.log");
-		fh.setFormatter(formatter);  
-		logger.addHandler(fh);	
-		return  fh;		
+	public ApiHttpClient(Gson gsonInstance){
+		
+		gson =  gsonInstance;
 	}
 	
-	public void createConnection(String uri, String apiKey, String method,String query) throws IOException {
-
+	public static void SetupLogger() throws IOException{		  
+		if(logger==null){
+			logger = Logger.getLogger("Log");
+			SimpleFormatter formatter = new SimpleFormatter();
+			FileHandler fh = new FileHandler("Log.log");
+			fh.setFormatter(formatter);  
+			logger.addHandler(fh);
+		}
+	}
+	
+	
+	
+	public <T> Response<T> sendRequest(String uri,String apiKey,String method, String payload,Class<T> returnType) throws IOException,JsonSyntaxException {
+		Response<T> response = null;
+		JSONObject json = null;
+		String lines = null;
+		T jsonObject = null;
+		BufferedReader reader = null;
+		OutputStreamWriter outputStreamWriter=null;
+		
 		URL url = new URL(uri);
 		
 		if(AppSettings.debugMode){	
 		    logger.info("**Request**  	"+method+":	"+uri);
-		    logger.info("**Payload**	"+query);
+		    logger.info("**Payload**	"+payload);
 		}
 		
-		connection = (HttpURLConnection) url.openConnection();
-		connection.setConnectTimeout(AppSettings.connectTimeout * 1000);
-		connection.setReadTimeout(AppSettings.readTimeout * 1000);
-		connection.setDoOutput(true);
-		connection.setDoInput(true);
-		connection.setRequestMethod(method); 
-		connection.setUseCaches(false);
-		connection.setInstanceFollowRedirects(true);
-
-		connection.setRequestProperty("Content-Type", "application/json");
-		connection.setRequestProperty("Authorization", apiKey);		
-		connection.connect();
-	
-		if(HttpMethods.Post == method || HttpMethods.Put == method){
+		try{
+			connection = (HttpURLConnection) url.openConnection();
+			connection.setConnectTimeout(AppSettings.connectTimeout * 1000);
+			connection.setReadTimeout(AppSettings.readTimeout * 1000);
+			connection.setRequestMethod(method); 
+			connection.setUseCaches(false);
+			connection.setRequestProperty("Content-Type", "application/json");
+			connection.setRequestProperty("Authorization", apiKey);
+			connection.setDoOutput(true);
+				
+			connection.connect();
+		
+			if(HttpMethods.Post == method || HttpMethods.Put == method){
+				outputStreamWriter = new OutputStreamWriter(connection.getOutputStream());
+				
+				outputStreamWriter.write(payload);
+				outputStreamWriter.flush();
+			}
 			
-			OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream());
-			
-			out.write(query);
-			out.flush();
-			out.close();
-		}
-	}
-
-	public String getQuery(JSONObject js) {
-		String query = js.toString();
-		return query;
-	}
-
-	
-	public <T> Response<T> getResponse(Class<T> type) throws CKOException {
- 
-		Response<T> jsonResponse = null;
-		JSONObject json = null;
-		String lines = null;
-		T jsonObject = null;
-		Gson gson = new Gson();
-		BufferedReader reader = null;
-
-		try {
 			httpStatus = connection.getResponseCode();
 			
 			if (this.httpStatus == 200) {
 				
 				reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 				
-				while ((lines = reader.readLine()) != null) {
-					json = JSONObject.fromObject(lines);
-				}				
+				lines = reader.readLine();
+				
+				if(lines!=null){
+				json = JSONObject.fromObject(lines);			
+				}
 				
 				if(AppSettings.debugMode){	
 				    logger.info("** HttpResponse**  Status 200 OK :"+json);
 				}
 				
-				jsonObject = gson.fromJson(json.toString(),type);
+				jsonObject = gson.fromJson(json.toString(),returnType);
 				
-				jsonResponse = new Response<T>(jsonObject);
-				jsonResponse.httpStatus= this.httpStatus;				
+				response = new Response<T>(jsonObject);
+				response.httpStatus= this.httpStatus;				
 			} else{
 								
 				reader = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
 				
-				while ((lines = reader.readLine()) != null) {
-					json = JSONObject.fromObject(lines);
+				lines = reader.readLine();
+				
+				if(lines!=null){
+				json = JSONObject.fromObject(lines);			
 				}
 							
 				ResponseError error = gson.fromJson(json.toString(),ResponseError.class);
 
-				jsonResponse = new Response<T>(jsonObject);
+				response = new Response<T>(jsonObject);
 
-				jsonResponse.error=error;
-				jsonResponse.hasError=true;
-				jsonResponse.httpStatus= this.httpStatus;
+				response.error=error;
+				response.hasError=true;
+				response.httpStatus= this.httpStatus;
 				
 				if(AppSettings.debugMode){	
-				    logger.info("** HttpResponse**  StatusError: "+jsonResponse.httpStatus+json);			
+				    logger.info("** HttpResponse**  StatusError: "+response.httpStatus+json);			
 				}				
-				
-				reader.close();
 			}
-		} catch (IOException e) {
-						
-			throw new CKOException(jsonResponse.error.message,jsonResponse.error.errorCode,e);
+			
+			reader.close();
+				
+			return response;
+			
+		}catch (IOException e) {
+			throw e;
 		}
 		finally {
-			reader=null;
-			connection.disconnect();
-		 }		
+			
+			if(reader!=null){
+				reader.close();
+			}
+			
+			if(outputStreamWriter!=null){
+				outputStreamWriter.close();
+			}
+			
+			if(connection!=null){
+				connection.disconnect();
+			}
+		}		
+	}
 
-		return jsonResponse;
+
+	public <T> Response<T> postRequest(String url,String key,String payload,Class<T> returnType) throws JsonSyntaxException, IOException{
+		
+			return sendRequest(url,key, HttpMethods.Post, payload,returnType);
+	}
+	
+	public <T> Response<T> putRequest(String url,String key,String payload,Class<T> returnType) throws JsonSyntaxException, IOException{
+		
+		return sendRequest(url,key, HttpMethods.Put, payload,returnType);
+	}
+	
+	public <T> Response<T> getRequest(String url,String key,Class<T> returnType) throws JsonSyntaxException, IOException{
+		
+		return sendRequest(url,key, HttpMethods.Get, null,returnType);
+	}
+	
+	public <T> Response<T> deleteRequest(String url,String key,Class<T> returnType) throws JsonSyntaxException, IOException{
+		
+		return sendRequest(url,key, HttpMethods.Delete, null,returnType);
 	}
 
 }
