@@ -35,7 +35,7 @@ public class ApiHttpClient {
 		if(logger==null){
 			logger = Logger.getLogger("Log");
 			SimpleFormatter formatter = new SimpleFormatter();
-			FileHandler fh = new FileHandler("Log.log");
+			FileHandler fh = new FileHandler("Log.log",true);
 			fh.setFormatter(formatter);  
 			logger.addHandler(fh);
 		}
