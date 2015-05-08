@@ -11,12 +11,10 @@ import com.checkout.api.services.customer.response.Customer;
 import com.checkout.api.services.customer.response.CustomerList;
 import com.checkout.api.services.shared.OkResponse;
 import com.checkout.api.services.shared.Response;
-import com.checkout.api.services.token.response.PaymentToken;
 import com.checkout.helpers.ApiUrls;
 import com.checkout.helpers.AppSettings;
 import com.checkout.helpers.DateTimeHelper;
 import com.checkout.helpers.UrlHelper;
-import com.checkout.utilities.HttpMethods;
 import com.google.gson.JsonSyntaxException;
 
 public class CustomerService extends BaseService{

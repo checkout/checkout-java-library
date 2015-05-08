@@ -24,7 +24,6 @@ import com.checkout.api.services.charge.response.Capture;
 import com.checkout.api.services.charge.response.Charge;
 import com.checkout.api.services.charge.response.Refund;
 import com.checkout.api.services.charge.response.Void;
-import com.checkout.api.services.customer.request.CustomerCreate;
 import com.checkout.api.services.customer.response.Customer;
 import com.checkout.api.services.shared.OkResponse;
 import com.checkout.api.services.shared.Response;

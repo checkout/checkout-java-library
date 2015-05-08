@@ -19,7 +19,6 @@ import com.checkout.api.services.customer.request.CustomerUpdate;
 import com.checkout.api.services.shared.Address;
 import com.checkout.api.services.shared.Phone;
 import com.checkout.api.services.shared.Product;
-import com.checkout.api.services.shared.Response;
 import com.checkout.api.services.token.request.PaymentTokenCreate;
 
 public class TestHelper {

@@ -16,7 +16,7 @@ public String responseMessage;
 public String responseAdvancedInfo;
 public String responseCode;
 public String status;
-public boolean iscascaded;
+public boolean isCascaded;
 public String authCode;
 public Address shippingDetails;
 }
