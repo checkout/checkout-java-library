@@ -19,7 +19,7 @@ public class ValidationErrorTests {
 	
 	@Before
 	public void setUp() throws Exception {
-		ckoClient = new APIClient("sk_test_CC937715-4F68-4306-BCBE-640B249A4D50",true);
+		ckoClient = new APIClient("sk_CC937715-4F68-4306-BCBE-640B249A4D50",true);
 		
 	}
 

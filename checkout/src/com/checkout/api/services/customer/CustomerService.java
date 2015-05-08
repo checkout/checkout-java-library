@@ -62,7 +62,7 @@ public class CustomerService extends BaseService{
 
 	        if (payload.toDate !=null)
 	        {
-	            apiUrl = UrlHelper.addParameterToUrl(apiUrl, "fromDate", DateTimeHelper.FormatAsUtc(payload.toDate));
+	            apiUrl = UrlHelper.addParameterToUrl(apiUrl, "toDate", DateTimeHelper.FormatAsUtc(payload.toDate));
 	        }
 
 	return	httpClient.getRequest(apiUrl,AppSettings.secretKey, CustomerList.class);

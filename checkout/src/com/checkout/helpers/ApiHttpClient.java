@@ -12,8 +12,6 @@ import java.util.logging.SimpleFormatter;
 
 import com.checkout.api.services.shared.Response;
 import com.checkout.api.services.shared.ResponseError;
-import com.checkout.api.services.token.request.PaymentTokenCreate;
-import com.checkout.api.services.token.response.PaymentToken;
 import com.checkout.utilities.HttpMethods;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -43,7 +41,7 @@ public class ApiHttpClient {
 	
 	
 	
-	public <T> Response<T> sendRequest(String uri,String apiKey,String method, String payload,Class<T> returnType) throws IOException,JsonSyntaxException {
+	private <T> Response<T> sendRequest(String uri,String apiKey,String method, String payload,Class<T> returnType) throws IOException,JsonSyntaxException {
 		Response<T> response = null;
 		JSONObject json = null;
 		String lines = null;
@@ -125,6 +123,9 @@ public class ApiHttpClient {
 			return response;
 			
 		}catch (IOException e) {
+			if(AppSettings.debugMode){	
+				logger.info("** Exception ** "+ e.toString());
+			}
 			throw e;
 		}
 		finally {

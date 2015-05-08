@@ -28,7 +28,7 @@ public class CustomerServiceTests {
 	
 	@Before
 	public void setUp() throws Exception {
-		ckoClient = new APIClient("sk_test_CC937715-4F68-4306-BCBE-640B249A4D50",true);
+		ckoClient = new APIClient("sk_CC937715-4F68-4306-BCBE-640B249A4D50",true);
 	}
 
 	@Test
@@ -73,7 +73,8 @@ public class CustomerServiceTests {
 	public void GetCustomerListRequestTest() throws JsonSyntaxException, IOException, InstantiationException, IllegalAccessException {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(new Date()); 
-		 
+     	cal.add(Calendar.SECOND, -20);
+     	
 		CustomerListGet customerListRequest =new CustomerListGet();
 		customerListRequest.count = 2;
 		customerListRequest.offset = 1;
@@ -91,7 +92,7 @@ public class CustomerServiceTests {
 
 		assertEquals(false, customerListResponse.hasError);
 		assertEquals(200, customerListResponse.httpStatus);
-		assertEquals(customerListResponse.model.count,2);
+		assertEquals(2,customerListResponse.model.count);
 		
 		assertEquals(customerListResponse.model.data.get(0).id,customerCreateResponse2.model.id);
 		ValidateCustomerResponse(customerCreatePayload2, customerListResponse.model.data.get(0));	
