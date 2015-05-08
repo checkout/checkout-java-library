@@ -8,7 +8,6 @@ import com.checkout.api.services.token.request.PaymentTokenCreate;
 import com.checkout.api.services.token.response.PaymentToken;
 import com.checkout.helpers.ApiUrls;
 import com.checkout.helpers.AppSettings;
-import com.checkout.utilities.HttpMethods;
 import com.google.gson.JsonSyntaxException;
 
 

@@ -73,7 +73,7 @@ public class CustomerServiceTests {
 	public void GetCustomerListRequestTest() throws JsonSyntaxException, IOException, InstantiationException, IllegalAccessException {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(new Date()); 
-     	cal.add(Calendar.SECOND, -20);
+     	cal.add(Calendar.SECOND, -30);
      	
 		CustomerListGet customerListRequest =new CustomerListGet();
 		customerListRequest.count = 2;
