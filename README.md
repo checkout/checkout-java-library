@@ -44,10 +44,8 @@ import com.checkout.exception.CKOException;
 
 public class Example {
 
-	public static void main(String[] args) throws IOException{
+	public static void main(String[] args) {
 
-		APIClient ckoAPIClient= new APIClient("sk_CC937715-4F68-4306-BCBE-640B249A4D50",true,60,60);
-		
 		PaymentTokenCreate tokenPayload= new PaymentTokenCreate();
 		
 		tokenPayload.value=100;
@@ -79,24 +77,24 @@ public class Example {
 		tokenPayload.shippingDetails.phone.countryCode="44"; //Phone country code
 		tokenPayload.shippingDetails.phone.number = "203 583 44 55";
 		
-		Response<PaymentToken> tokenResponse = null;
-		
-		
 		 try {
-			  
-			 tokenResponse = ckoAPIClient.tokenService.createPaymentToken(tokenPayload);
-			 
-		 } catch (CKOException e) {
+			APIClient ckoAPIClient= new APIClient("sk_CC937715-4F68-4306-BCBE-640B249A4D50",true,60,60);
+	 
+				Response<PaymentToken> tokenResponse = ckoAPIClient.tokenService.createPaymentToken(tokenPayload);
+		
+			if(!tokenResponse.hasError){
+				String paymentTokenId = tokenResponse.model.id; //payment token id retrieved from the response model
+				//...
+			}else{
+				// Api has returned an error. You can access the error details with the error property on the response object.
+				// chargeResponse.error
+			}
+		 
+		 } catch (Exception e) {
 	            e.printStackTrace();
 		 }
 		 
-		if(!tokenResponse.hasError){
-			String paymentTokenId = tokenResponse.model.id; //payment token id retrieved from the response model
-			//...
-		}else{
-			// Api has returned an error. You can access the error details with the error property on the response object.
-			// chargeResponse.error
-		}
+		
 		
 	}
 }
