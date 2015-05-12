@@ -2,6 +2,7 @@ package com.checkout.api.services.charge.request;
 
 import java.util.List;
 
+import com.checkout.api.services.shared.Address;
 import com.checkout.api.services.shared.Product;
 
 public class BaseCharge extends BaseChargeInfo{
@@ -21,4 +22,5 @@ public class BaseCharge extends BaseChargeInfo{
 	public String customerIp;
 	public String email;
 	public List<Product> products;
+	public Address shippingDetails;
 }
