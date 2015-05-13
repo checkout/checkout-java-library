@@ -10,133 +10,126 @@ Add the latest **checkout-java-v{version number}.jar** file to your class path. 
 
 Import the **APIClient.java** in your code as below:   
 ```
-import com.checkout.APIClient;;
+import com.checkout.APIClient;
 ```
 
-You will be required to set the secret key when initialising a new **APIClient** instance. You will also have option for other configurations defined in **AppSettings.java** file. There are two constructors available for configuration:
+You will be required to set the secret key when initialising a new **APIClient** instance. You will also have option for other configurations defined in **AppSettings.java** file. There are many constructors available for configuration:
 
 ```html
+APIClient(String secretKey,Environment env, boolean debugMode,int connectTimeout,int readTimeout)
+APIClient(String secretKey,Environment env,boolean debugMode)
+APIClient(String secretKey,Environment env)
+APIClient(String secretKey,boolean debugMode) 
 APIClient(String secretKey)
-APIClient(String secretKey, boolean debugMode,int connectTimeout,int readTimeout)
 ```
 
-
-If **DebugMode** is set to true, the program will log the response result to console.
+If **DebugMode** is set to true, the program will trace the request and response result to a log file called 'Log.log' at the root of the application.
 
 By default both **connectTimeout** and **readTimeout** set to 60 seconds. You got option to change them as needed.
 
 **Create payment token**
 
-```html
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import com.checkout.APIClient;
-import com.checkout.apiServices.charges.response.ProductsModel;
-import com.checkout.apiServices.sharedModels.Address;
-import com.checkout.apiServices.sharedModels.Phone;
-import com.checkout.apiServices.sharedModels.Response;
-import com.checkout.apiServices.tokens.request.PaymentTokenCreate;
-import com.checkout.apiServices.tokens.response.PaymentToken;
-import com.checkout.exception.CKOException;
-
+```
 public class Example {
 
 	public static void main(String[] args) {
+			
+		// Create payload
+	    PaymentTokenCreate tokenPayload= new PaymentTokenCreate();
 
-		PaymentTokenCreate tokenPayload= new PaymentTokenCreate();
-		
-		tokenPayload.value=100;
-		tokenPayload.currency="GBP";
-		tokenPayload.autoCapture="N";
-		tokenPayload.customerIp="88.216.3.135";
-		tokenPayload.description="test";
-		
-		tokenPayload.metadata = new HashMap<String,String>();
-		tokenPayload.metadata.put("key1", "test value");
-		
-		tokenPayload.products = new ArrayList<ProductsModel>();
-		 ProductsModel product1 =new ProductsModel();
-		 product1.description= "A4 office paper";
-		 product1.name="a4 white copy paper";
-		 product1.quantity="1";
-		 product1.shippingCost="10";
-		 product1.sku= "ABC123";
-		 product1.trackingUrl="http://www.tracker.com";
-		 tokenPayload.products.add(product1);
-		 
-		tokenPayload.shippingDetails = new Address();
-		tokenPayload.shippingDetails.addressLine1 = "1 Glading Fields";
-		tokenPayload.shippingDetails.postcode = "N16 2BR";
-		tokenPayload.shippingDetails.country = "GB";
-		tokenPayload.shippingDetails.city = "London";
-		
-		tokenPayload.shippingDetails.phone = new Phone();
-		tokenPayload.shippingDetails.phone.countryCode="44"; //Phone country code
-		tokenPayload.shippingDetails.phone.number = "203 583 44 55";
-		
-		 try {
-			APIClient ckoAPIClient= new APIClient("sk_CC937715-4F68-4306-BCBE-640B249A4D50",true,60,60);
-	 
-				Response<PaymentToken> tokenResponse = ckoAPIClient.tokenService.createPaymentToken(tokenPayload);
-		
-			if(!tokenResponse.hasError){
-				String paymentTokenId = tokenResponse.model.id; //payment token id retrieved from the response model
-				//...
-			}else{
-				// Api has returned an error. You can access the error details with the error property on the response object.
-				// chargeResponse.error
-			}
-		 
-		 } catch (Exception e) {
-	            e.printStackTrace();
-		 }
-		 
-		
-		
+	    tokenPayload.value="100";
+	    tokenPayload.currency="GBP";
+	    tokenPayload.autoCapture="N";
+	    tokenPayload.customerIp="88.216.3.135";
+	    tokenPayload.description="test";
+
+	    tokenPayload.metadata = new HashMap<String,String>();
+	    tokenPayload.metadata.put("key1", "test value");
+
+	    tokenPayload.products = new ArrayList<Product>();
+	    Product product1 =new Product();
+	    product1.description= "A4 office paper";
+	    product1.name="a4 white copy paper";
+	    product1.quantity=1;
+	    product1.shippingCost=10;
+	    product1.sku= "ABC123";
+	    product1.trackingUrl="http://www.tracker.com";
+	    tokenPayload.products.add(product1);
+
+	    tokenPayload.shippingDetails = new Address();
+	    tokenPayload.shippingDetails.addressLine1 = "1 Glading Fields";
+	    tokenPayload.shippingDetails.postcode = "N16 2BR";
+	    tokenPayload.shippingDetails.country = "GB";
+	    tokenPayload.shippingDetails.city = "London";
+
+	    tokenPayload.shippingDetails.phone = new Phone();
+	    tokenPayload.shippingDetails.phone.countryCode="44"; //Phone country code
+	    tokenPayload.shippingDetails.phone.number = "203 583 44 55";
+
+	    try {
+
+	        // Create APIClient instance with your secret key
+	        APIClient ckoAPIClient= new APIClient("sk_CC937715-4F68-4306-BCBE-640B249A4D50",Environment.LIVE);
+
+	        // Submit your request and receive an apiResponse
+	        Response<PaymentToken> apiResponse = ckoAPIClient.tokenService.createPaymentToken(tokenPayload);
+
+	        if(!apiResponse.hasError){
+
+	            // Access the response object retrieved from the api
+	            PaymentToken paymentToken = apiResponse.model; 
+
+	        }else{
+	            // Api has returned an error object. You can access the details in the error property of the apiResponse.
+	            // apiResponse.error
+	        }
+
+	    } catch (Exception e) {
+
+	    }
+
 	}
 }
 ```
 
 **Verify charge by payment token**
 
-```html
-import java.io.IOException;
-
-import com.checkout.APIClient;
-import com.checkout.apiServices.charges.response.Charge;
-import com.checkout.apiServices.sharedModels.Response;
-import com.checkout.exception.CKOException;
-
+```
 public class Example {
 
-	public static void main(String[] args){
+	public static void main(String[] args) {
 		
-		String paymentToken ="pay_tok_7a66140a-ffc9-48a7-80c3-6e1b70e8076d";	// enter the payment token for the charge to be verified.
-		
-		 try {
-			 APIClient ckoAPIClient= new APIClient("sk_CC937715-4F68-4306-BCBE-640B249A4D50",true,60,60);
-			 Response<Charge> chargeResponse = ckoAPIClient.chargeService.verifyCharge(paymentToken);
-			
-				if(!chargeResponse.hasError){
-			    String paymentTokenId = chargeResponse.model.id; //payment token id retrieved from the response model
-  			  //...
-  		  }else{
-  			  // Api has returned an error. You can access the error details with the error property on the response object.
-  			  // chargeResponse.error
-  		  } 
-		 } catch (Exception e) {
-	            e.printStackTrace();
-		 }
+		// Create payload
+	    String paymentToken = "pay_tok_7a66140a-ffc9-48a7-80c3-6e1b70e8076d";
+
+	     try {
+
+	        // Create APIClient instance with your secret key
+	        APIClient ckoAPIClient= new APIClient("sk_093F4C8D-E608-4B8D-9B39-8C2491345864",Environment.LIVE);
+
+	        // Submit your request and receive an apiResponse
+	        Response<Charge> apiResponse = ckoAPIClient.chargeService.verifyCharge(paymentToken);
+
+	        if(!apiResponse.hasError){
+
+	            // Access the response object retrieved from the api
+	            Charge charge = apiResponse.model; 
+
+	        }else{
+	            // Api has returned an error object. You can access the details in the error property of the apiResponse.
+	            // apiResponse.error
+	        }
+
+	    } catch (Exception e) {
+
+	    }
 	}
 }
 ```
 
 ### Logging
 
-For logging **Apache Commons Logging** has been used. If you enable logging all the http request and responses will be logged in the console.   
+For logging **Apache Commons Logging** has been used. If you enable logging all the http request and responses will be logged in file called 'Log.log' at the root of the application.   
 
 logger.info("id :"+ chargeId);`
 
