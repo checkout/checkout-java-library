@@ -21,6 +21,7 @@ public class BaseCharge extends BaseChargeInfo{
 	public int autoCapTime;
 	public String customerIp;
 	public String email;
+	public String customerId;
 	public List<Product> products;
 	public Address shippingDetails;
 }

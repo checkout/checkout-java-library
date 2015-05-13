@@ -3,12 +3,10 @@ package test.chargeservice;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
-
 import org.junit.Before;
 import org.junit.Test;
 
 import test.TestHelper;
-
 import com.checkout.APIClient;
 import com.checkout.api.services.card.request.CardCreate;
 import com.checkout.api.services.card.response.Card;
@@ -16,6 +14,7 @@ import com.checkout.api.services.charge.request.BaseCharge;
 import com.checkout.api.services.charge.request.BaseChargeInfo;
 import com.checkout.api.services.charge.request.CardCharge;
 import com.checkout.api.services.charge.request.CardIdCharge;
+import com.checkout.api.services.charge.request.CardTokenCharge;
 import com.checkout.api.services.charge.request.ChargeCapture;
 import com.checkout.api.services.charge.request.ChargeRefund;
 import com.checkout.api.services.charge.request.ChargeVoid;
@@ -27,6 +26,7 @@ import com.checkout.api.services.charge.response.Void;
 import com.checkout.api.services.customer.response.Customer;
 import com.checkout.api.services.shared.OkResponse;
 import com.checkout.api.services.shared.Response;
+import com.checkout.helpers.Environment;
 import com.google.gson.JsonSyntaxException;
 
 public class ChargeServiceTests {
@@ -42,14 +42,33 @@ public class ChargeServiceTests {
 	@Test
 	public void verifyChargeByPaymentToken() throws JsonSyntaxException, IOException {		
 		
-		String paymentTken ="pay_tok_4bf11f31-ae5f-4ac6-a942-2105f0f41860";// payment token for the JS charge
+		String paymentToken ="pay_tok_4bf11f31-ae5f-4ac6-a942-2105f0f41860";// payment token for the JS charge
 		
-		Response<Charge> chargeResponse = ckoClient.chargeService.verifyCharge(paymentTken);
+		Response<Charge> chargeResponse = ckoClient.chargeService.verifyCharge(paymentToken);
 		
 		assertEquals(false, chargeResponse.hasError);
 		assertEquals(200, chargeResponse.httpStatus);			
 		
 		assertNotNull(chargeResponse.model.id);
+	}
+	
+	@Test
+	public void chargeWithCardToken() throws JsonSyntaxException, IOException, InstantiationException, IllegalAccessException {		
+		
+		ckoClient = new APIClient("sk_CC937715-4F68-4306-BCBE-640B249A4D50",Environment.LIVE,true);
+		
+		String cardToken ="card_tok_220E97F3-4DA3-4F09-B7AE-C633D8D5E3E2";// card token for charge
+		
+		CardTokenCharge payload = TestHelper.getCardTokenChargeModel(cardToken);
+		
+		Response<Charge> chargeResponse = ckoClient.chargeService.chargeWithCardToken(payload);
+		Charge charge = chargeResponse.model;
+		
+		assertEquals(false, chargeResponse.hasError);
+		assertEquals(200, chargeResponse.httpStatus);			
+		assertEquals(payload.transactionIndicator,charge.transactionIndicator);
+		
+		validateBaseCharge(payload, charge);	
 	}
 	
 	@Test
@@ -167,7 +186,7 @@ public class ChargeServiceTests {
 		
 		ChargeCapture cardChargePayload =TestHelper.getChargeCaptureModel();
 		cardChargePayload.value = createChargeResponse.model.value;
-		
+				
 		Response<Capture> captureResponse= ckoClient.chargeService.captureCharge(createChargeResponse.model.id,cardChargePayload);
 		
 		assertEquals(false, captureResponse.hasError);
