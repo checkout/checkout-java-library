@@ -5,6 +5,7 @@ import java.io.IOException;
 import com.checkout.api.services.BaseService;
 import com.checkout.api.services.charge.request.CardCharge;
 import com.checkout.api.services.charge.request.CardIdCharge;
+import com.checkout.api.services.charge.request.CardTokenCharge;
 import com.checkout.api.services.charge.request.ChargeCapture;
 import com.checkout.api.services.charge.request.ChargeRefund;
 import com.checkout.api.services.charge.request.ChargeUpdate;
@@ -37,6 +38,11 @@ public class ChargeService extends BaseService {
 	public Response<Charge> chargeWithCardId(CardIdCharge payload)throws IOException,JsonSyntaxException {
 
 		return httpClient.postRequest(ApiUrls.CARD_CHARGE,AppSettings.secretKey, gson.toJson(payload),Charge.class);
+	}
+	
+	public Response<Charge> chargeWithCardToken(CardTokenCharge payload)throws IOException,JsonSyntaxException {
+
+		return httpClient.postRequest(ApiUrls.CARD_TOKEN_CHARGE,AppSettings.secretKey,gson.toJson(payload), Charge.class);
 	}
 	
 	public Response<Charge> chargeWithDefaultCustomerCard(DefaultCardCharge payload)throws IOException,JsonSyntaxException {
@@ -75,5 +81,5 @@ public class ChargeService extends BaseService {
 
 		return httpClient.postRequest(url, AppSettings.secretKey, gson.toJson(payload),Refund.class);
 	}
-	
+
 }

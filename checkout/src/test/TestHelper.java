@@ -8,6 +8,7 @@ import com.checkout.api.services.charge.request.BaseCharge;
 import com.checkout.api.services.charge.request.BaseChargeInfo;
 import com.checkout.api.services.charge.request.CardCharge;
 import com.checkout.api.services.charge.request.CardIdCharge;
+import com.checkout.api.services.charge.request.CardTokenCharge;
 import com.checkout.api.services.charge.request.ChargeCapture;
 import com.checkout.api.services.charge.request.ChargeRefund;
 import com.checkout.api.services.charge.request.ChargeUpdate;
@@ -225,6 +226,15 @@ public class TestHelper {
 		
 		return  cardIdCharge;
 	}
+	
+	public static CardTokenCharge getCardTokenChargeModel(String cardToken) throws InstantiationException, IllegalAccessException {
+		CardTokenCharge cardTokenCharge = getBaseChargeModel(CardTokenCharge.class);
+		cardTokenCharge.transactionIndicator = "1";
+		cardTokenCharge.cardToken = cardToken;
+		return  cardTokenCharge;
+	}
+	
+	
 	public static DefaultCardCharge getDefaultCardChargeModel(String email) throws InstantiationException, IllegalAccessException {
 		DefaultCardCharge defaultCardCharge = getBaseChargeModel(DefaultCardCharge.class);
 		defaultCardCharge.transactionIndicator = "1";
@@ -267,5 +277,4 @@ public class TestHelper {
 		
 		return baseChargeInfo;
 	}
-	
 }
