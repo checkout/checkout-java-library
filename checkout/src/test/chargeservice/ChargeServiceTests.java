@@ -54,9 +54,7 @@ public class ChargeServiceTests {
 	
 	@Test
 	public void chargeWithCardToken() throws JsonSyntaxException, IOException, InstantiationException, IllegalAccessException {		
-		
-		ckoClient = new APIClient("sk_CC937715-4F68-4306-BCBE-640B249A4D50",Environment.LIVE,true);
-		
+				
 		String cardToken ="card_tok_220E97F3-4DA3-4F09-B7AE-C633D8D5E3E2";// card token for charge
 		
 		CardTokenCharge payload = TestHelper.getCardTokenChargeModel(cardToken);
