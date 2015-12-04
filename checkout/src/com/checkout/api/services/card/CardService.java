@@ -11,7 +11,6 @@ import com.checkout.api.services.shared.OkResponse;
 import com.checkout.api.services.shared.Response;
 import com.checkout.helpers.ApiUrls;
 import com.checkout.helpers.AppSettings;
-import com.checkout.utilities.HttpMethods;
 import com.google.gson.JsonSyntaxException;
 
 public class CardService extends BaseService{
