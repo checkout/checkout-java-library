@@ -246,7 +246,7 @@ public class ChargeServiceTests {
 		assertEquals(charge.responseCode,"10000");
 		assertEquals(payload.trackId,charge.trackId);
 		assertEquals(payload.value,charge.value);
-		assertEquals(payload.currency,charge.currency);
+		assertEquals(payload.currency,charge.currency.toLowerCase());
 		assertEquals(payload.description,charge.description);
 		assertEquals(payload.email,charge.email);
 		assertEquals(payload.chargeMode,charge.chargeMode);

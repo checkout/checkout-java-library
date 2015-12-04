@@ -22,6 +22,7 @@ public class BaseCharge extends BaseChargeInfo{
 	public String customerIp;
 	public String email;
 	public String customerId;
+	public String customerName;
 	public List<Product> products;
 	public Address shippingDetails;
 }

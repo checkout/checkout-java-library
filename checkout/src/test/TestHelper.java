@@ -252,6 +252,7 @@ public class TestHelper {
 		baseCharge.autoCapture="N";
 		baseCharge.trackId= "TRK12345";
 		baseCharge.customerIp="82.23.168.254";
+		baseCharge.customerName = "Test Customer";
 		baseCharge.description= getRandomString().substring(20);
 		baseCharge.metadata = getRandomMetadata();
 		baseCharge.products = getRandomProducts();
