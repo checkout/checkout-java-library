@@ -189,6 +189,15 @@ public class TestHelper {
 		
 		return  cardCharge;
 	}
+	public static CardCharge getCardChargeModel3ds() throws InstantiationException, IllegalAccessException {
+		CardCharge cardCharge = getBaseChargeModel(CardCharge.class);
+		
+		cardCharge.transactionIndicator = "1";
+		cardCharge.chargeMode = 2;
+		cardCharge.card =getCardCreateModel();
+		
+		return  cardCharge;
+	}
 	public static ChargeUpdate getChargeUpdateModel() throws InstantiationException, IllegalAccessException {
 		ChargeUpdate chargeUpdate =new ChargeUpdate();
 		
