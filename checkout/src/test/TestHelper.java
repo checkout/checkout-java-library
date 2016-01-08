@@ -189,6 +189,15 @@ public class TestHelper {
 		
 		return  cardCharge;
 	}
+	public static CardCharge getCardChargeModel3ds() throws InstantiationException, IllegalAccessException {
+		CardCharge cardCharge = getBaseChargeModel(CardCharge.class);
+		
+		cardCharge.transactionIndicator = "1";
+		cardCharge.chargeMode = 2;
+		cardCharge.card =getCardCreateModel();
+		
+		return  cardCharge;
+	}
 	public static ChargeUpdate getChargeUpdateModel() throws InstantiationException, IllegalAccessException {
 		ChargeUpdate chargeUpdate =new ChargeUpdate();
 		
@@ -256,6 +265,7 @@ public class TestHelper {
 		baseCharge.description= getRandomString().substring(20);
 		baseCharge.metadata = getRandomMetadata();
 		baseCharge.products = getRandomProducts();
+		baseCharge.shippingDetails = getRandomAddress();
 		baseCharge.udf1=getRandomString().substring(20);
 		baseCharge.udf2=getRandomString().substring(20);
 		baseCharge.udf3=getRandomString().substring(20);

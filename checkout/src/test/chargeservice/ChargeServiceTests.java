@@ -209,6 +209,26 @@ public class ChargeServiceTests {
 		validateBaseChargeInfo(refundPayload,refundResponse.model);
 	}
 	
+	@Test
+	public void createChargeWithCard3ds() throws JsonSyntaxException, IOException, InstantiationException, IllegalAccessException {		
+		CardCharge payload =TestHelper.getCardChargeModel3ds();
+		
+		Response<Charge> chargeResponse= ckoClient.chargeService.chargeWithCard(payload);
+		Charge charge = chargeResponse.model;
+				
+		assertEquals(false, chargeResponse.hasError);
+		assertEquals(200, chargeResponse.httpStatus);
+		
+		validateBaseCharge3ds(payload, charge);	
+	}
+	
+	private void validateBaseCharge3ds(BaseCharge payload, Charge charge) {
+		assertNotNull(charge.id);
+		assertNotNull(charge.redirectUrl);
+		assertEquals(charge.responseCode,"10000");
+		assertEquals(payload.chargeMode,charge.chargeMode);
+	}
+	
 	/*
 	 * Checks if the card returned for charge is same as the payload card
 	 * 
