@@ -265,6 +265,7 @@ public class TestHelper {
 		baseCharge.description= getRandomString().substring(20);
 		baseCharge.metadata = getRandomMetadata();
 		baseCharge.products = getRandomProducts();
+		baseCharge.shippingDetails = getRandomAddress();
 		baseCharge.udf1=getRandomString().substring(20);
 		baseCharge.udf2=getRandomString().substring(20);
 		baseCharge.udf3=getRandomString().substring(20);
