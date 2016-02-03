@@ -1,12 +1,15 @@
 package test.chargeservice;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
+import java.util.Arrays;
+
 import org.junit.Before;
 import org.junit.Test;
 
-import test.TestHelper;
 import com.checkout.APIClient;
 import com.checkout.api.services.card.request.CardCreate;
 import com.checkout.api.services.card.response.Card;
@@ -21,13 +24,15 @@ import com.checkout.api.services.charge.request.ChargeVoid;
 import com.checkout.api.services.charge.request.DefaultCardCharge;
 import com.checkout.api.services.charge.response.Capture;
 import com.checkout.api.services.charge.response.Charge;
+import com.checkout.api.services.charge.response.ChargeHistory;
 import com.checkout.api.services.charge.response.Refund;
 import com.checkout.api.services.charge.response.Void;
 import com.checkout.api.services.customer.response.Customer;
 import com.checkout.api.services.shared.OkResponse;
 import com.checkout.api.services.shared.Response;
-import com.checkout.helpers.Environment;
 import com.google.gson.JsonSyntaxException;
+
+import test.TestHelper;
 
 public class ChargeServiceTests {
 	
@@ -221,6 +226,54 @@ public class ChargeServiceTests {
 		
 		validateBaseCharge3ds(payload, charge);	
 	}
+	
+	@Test
+	public void getChargeHistory() throws JsonSyntaxException, IOException, InstantiationException, IllegalAccessException {
+        
+        Response<Charge> createChargeResponse= ckoClient.chargeService.chargeWithCard(TestHelper.getCardChargeModel());
+		
+		ChargeVoid payload =TestHelper.getChargeVoidModel();
+		Response<Void> voidResponse= ckoClient.chargeService.voidCharge(createChargeResponse.model.id,payload);
+
+		Response<ChargeHistory> response = ckoClient.chargeService.getChargeHistory(voidResponse.model.id);
+
+        assertNotNull(response);
+        assertEquals(200, response.httpStatus);
+        assertEquals(response.model.charges.length, 2);
+
+        assertEquals(response.model.charges[0].id, voidResponse.model.id);
+        assertEquals(response.model.charges[1].id, createChargeResponse.model.id);
+    }
+	
+	@Test
+    public void getChargeWithMultipleHistory() throws JsonSyntaxException, IOException, InstantiationException, IllegalAccessException {
+        
+        // charge
+        CardCharge payload = TestHelper.getCardChargeModel();
+        Response<Charge> chargeResponse = ckoClient.chargeService.chargeWithCard(payload);
+        Charge charge = chargeResponse.model;
+
+        // capture
+        ChargeCapture chargeCaptureModel = TestHelper.getChargeCaptureModel();
+        Response<Capture> captureResponse = ckoClient.chargeService.captureCharge(charge.id, chargeCaptureModel);
+
+        // refund
+        ChargeRefund chargeRefundModel = TestHelper.getChargeRefundModel();
+        Response<Refund> refundResponse = ckoClient.chargeService.refundRequest(captureResponse.model.id, chargeRefundModel);
+
+        Response<ChargeHistory> response = ckoClient.chargeService.getChargeHistory(chargeResponse.model.id);
+
+        assertEquals(false, chargeResponse.hasError);
+        assertEquals(200, chargeResponse.httpStatus);
+        assertEquals(response.model.charges.length, 3);
+
+        assertEquals(response.model.charges[0].id, refundResponse.model.id);
+        assertEquals(response.model.charges[1].id, captureResponse.model.id);
+        assertEquals(response.model.charges[2].id, chargeResponse.model.id);
+
+        assertEquals(chargeResponse.model.id, captureResponse.model.originalId);
+        assertEquals(refundResponse.model.originalId, captureResponse.model.id);
+    }
 	
 	private void validateBaseCharge3ds(BaseCharge payload, Charge charge) {
 		assertNotNull(charge.id);
