@@ -19,5 +19,6 @@ public class ApiUrls {
 	public static final String REFUND_CHARGE=String.format(AppSettings.baseApiUrl,"charges/%s/refund");
 	public static final String CAPTURE_CHARGE=String.format(AppSettings.baseApiUrl,"charges/%s/capture");
 	public static final String VOID_CHARGE=String.format(AppSettings.baseApiUrl,"charges/%s/void");
+	public static final String CHARGE_HISTORY=String.format(AppSettings.baseApiUrl,"charges/%s/history");
 
 }
