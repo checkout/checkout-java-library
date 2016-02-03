@@ -13,6 +13,7 @@ import com.checkout.api.services.charge.request.ChargeVoid;
 import com.checkout.api.services.charge.request.DefaultCardCharge;
 import com.checkout.api.services.charge.response.Capture;
 import com.checkout.api.services.charge.response.Charge;
+import com.checkout.api.services.charge.response.ChargeHistory;
 import com.checkout.api.services.charge.response.Refund;
 import com.checkout.api.services.charge.response.Void;
 import com.checkout.api.services.shared.OkResponse;
@@ -81,5 +82,10 @@ public class ChargeService extends BaseService {
 
 		return httpClient.postRequest(url, AppSettings.secretKey, gson.toJson(payload),Refund.class);
 	}
+	
+	public Response<ChargeHistory> getChargeHistory(String chargeId) throws IOException,JsonSyntaxException {
+		String url=String.format(ApiUrls.CHARGE_HISTORY, chargeId);
+		return httpClient.getRequest(url, AppSettings.secretKey, ChargeHistory.class);
+    }
 
 }
