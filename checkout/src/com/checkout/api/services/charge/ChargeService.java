@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import com.checkout.api.services.BaseService;
 import com.checkout.api.services.charge.request.CardCharge;
+import com.checkout.api.services.charge.request.CardChargeWithNewPaymentPlan;
+import com.checkout.api.services.charge.request.CardChargeWithPaymentPlan;
 import com.checkout.api.services.charge.request.CardIdCharge;
 import com.checkout.api.services.charge.request.CardTokenCharge;
 import com.checkout.api.services.charge.request.ChargeCapture;
@@ -14,8 +16,11 @@ import com.checkout.api.services.charge.request.DefaultCardCharge;
 import com.checkout.api.services.charge.response.Capture;
 import com.checkout.api.services.charge.response.Charge;
 import com.checkout.api.services.charge.response.ChargeHistory;
+import com.checkout.api.services.charge.response.ChargeWithCustomerPaymentPlan;
 import com.checkout.api.services.charge.response.Refund;
 import com.checkout.api.services.charge.response.Void;
+import com.checkout.api.services.recurringPayments.request.CustomerPaymentPlanUpdate;
+import com.checkout.api.services.recurringPayments.response.CustomerPaymentPlan;
 import com.checkout.api.services.shared.OkResponse;
 import com.checkout.api.services.shared.Response;
 import com.checkout.helpers.ApiUrls;
@@ -86,6 +91,16 @@ public class ChargeService extends BaseService {
 	public Response<ChargeHistory> getChargeHistory(String chargeId) throws IOException,JsonSyntaxException {
 		String url=String.format(ApiUrls.CHARGE_HISTORY, chargeId);
 		return httpClient.getRequest(url, AppSettings.secretKey, ChargeHistory.class);
+    }
+	
+	public Response<ChargeWithCustomerPaymentPlan> addPaymentPlanToCardCharge(CardChargeWithPaymentPlan payload) throws IOException,JsonSyntaxException {
+
+		return httpClient.postRequest(ApiUrls.CARD_CHARGE, AppSettings.secretKey, gson.toJson(payload),ChargeWithCustomerPaymentPlan.class);
+    }
+	
+	public Response<ChargeWithCustomerPaymentPlan> createPaymentPlanWithCardCharge(CardChargeWithNewPaymentPlan payload) throws IOException,JsonSyntaxException {
+
+		return httpClient.postRequest(ApiUrls.CARD_CHARGE, AppSettings.secretKey, gson.toJson(payload),ChargeWithCustomerPaymentPlan.class);
     }
 
 }

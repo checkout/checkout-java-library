@@ -1,12 +1,19 @@
 package test;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.UUID;
 
 import com.checkout.api.services.card.request.CardCreate;
 import com.checkout.api.services.card.request.CardUpdate;
 import com.checkout.api.services.charge.request.BaseCharge;
 import com.checkout.api.services.charge.request.BaseChargeInfo;
 import com.checkout.api.services.charge.request.CardCharge;
+import com.checkout.api.services.charge.request.CardChargeWithNewPaymentPlan;
+import com.checkout.api.services.charge.request.CardChargeWithPaymentPlan;
 import com.checkout.api.services.charge.request.CardIdCharge;
 import com.checkout.api.services.charge.request.CardTokenCharge;
 import com.checkout.api.services.charge.request.ChargeCapture;
@@ -17,6 +24,14 @@ import com.checkout.api.services.charge.request.DefaultCardCharge;
 import com.checkout.api.services.customer.request.BaseCustomer;
 import com.checkout.api.services.customer.request.CustomerCreate;
 import com.checkout.api.services.customer.request.CustomerUpdate;
+import com.checkout.api.services.recurringPayments.request.BaseChargePaymentPlan;
+import com.checkout.api.services.recurringPayments.request.BasePaymentPlan;
+import com.checkout.api.services.recurringPayments.request.ChargePaymentPlan;
+import com.checkout.api.services.recurringPayments.request.CustomerPaymentPlanUpdate;
+import com.checkout.api.services.recurringPayments.request.ExistingPaymentPlan;
+import com.checkout.api.services.recurringPayments.request.PaymentPlan;
+import com.checkout.api.services.recurringPayments.request.PaymentPlanCreate;
+import com.checkout.api.services.recurringPayments.request.PaymentPlanUpdate;
 import com.checkout.api.services.shared.Address;
 import com.checkout.api.services.shared.Phone;
 import com.checkout.api.services.shared.Product;
@@ -288,4 +303,88 @@ public class TestHelper {
 		
 		return baseChargeInfo;
 	}
+	
+	 /*Recurring Payment Helpers*/
+	public static PaymentPlanCreate getPaymentPlans() {
+		PaymentPlan pp = new PaymentPlan();
+		pp = addBasePaymentPlans(pp);
+		PaymentPlanCreate ppc = new PaymentPlanCreate();
+		ppc.paymentPlans = new ArrayList<PaymentPlan>();
+		ppc.paymentPlans.add(pp);
+		return ppc;
+	}
+	
+	public static <T extends BaseChargePaymentPlan> T addBaseChargePaymentPlans(T paymentPlan) {
+		paymentPlan.name = "Recurring Plan 1";
+		paymentPlan.planTrackId = "CKO Plan 1";
+		paymentPlan.autoCapTime = 0;
+		paymentPlan.value = 39900;
+		paymentPlan.cycle = "1d";
+		paymentPlan.recurringCount = 10;
+		return paymentPlan;
+	}
+	
+	public static <T extends BasePaymentPlan> T addBasePaymentPlans(T paymentPlan) {
+		paymentPlan = addBaseChargePaymentPlans(paymentPlan);
+		paymentPlan.currency = "GBP";
+		return  paymentPlan;
+	}
+	
+	public static PaymentPlanUpdate getPaymentPlanUpdate() {
+		PaymentPlanUpdate ppu = new PaymentPlanUpdate();
+		ppu.value = 10;
+		ppu.status = 4;
+		return ppu;
+	}
+	
+	public static CardChargeWithPaymentPlan getCardChargeWithPaymentPlan() throws InstantiationException, IllegalAccessException {
+		CardChargeWithPaymentPlan cc = new CardChargeWithPaymentPlan();
+		cc = getBaseChargeInfoModel(CardChargeWithPaymentPlan.class);
+		cc.paymentPlans = new ArrayList<ExistingPaymentPlan>();
+		cc.card = getCardCreateModel();
+		cc = addChargeFields(cc);
+		return cc;
+	}
+	
+	public static CardChargeWithNewPaymentPlan getCardChargeWithNewPaymentPlan() throws InstantiationException, IllegalAccessException {
+		CardChargeWithNewPaymentPlan cc = new CardChargeWithNewPaymentPlan();
+		cc = getBaseChargeInfoModel(CardChargeWithNewPaymentPlan.class);
+		cc.paymentPlans = new ArrayList<ChargePaymentPlan>();
+		ChargePaymentPlan cpp = new ChargePaymentPlan();
+		cpp = addBaseChargePaymentPlans(cpp);
+		cc.paymentPlans.add(cpp);
+		cc.card = getCardCreateModel();
+		cc = addChargeFields(cc);
+		return cc;
+	}
+	
+	public static <T extends CardCharge> T addChargeFields(T cc) {
+		cc.transactionIndicator = "1";
+		cc.autoCapTime=0;
+		cc.email = getRandomEmail();
+		cc.currency="usd";
+		cc.value="100";
+		cc.autoCapture="N";
+		cc.trackId= "TRK12345";
+		cc.customerIp="82.23.168.254";
+		cc.customerName = "Test Customer";
+		cc.description= getRandomString().substring(20);
+		cc.metadata = getRandomMetadata();
+		cc.products = getRandomProducts();
+		cc.shippingDetails = getRandomAddress();
+		cc.udf1=getRandomString().substring(20);
+		cc.udf2=getRandomString().substring(20);
+		cc.udf3=getRandomString().substring(20);
+		cc.udf4=getRandomString().substring(20);
+		cc.udf5=getRandomString().substring(20);
+		return cc;
+	}
+	
+	public static CustomerPaymentPlanUpdate getCustomerPaymentPlanUpdate() {
+		CustomerPaymentPlanUpdate ppu = new CustomerPaymentPlanUpdate();
+		ppu.status = 4;
+		return ppu;
+	}
+	
+	
 }

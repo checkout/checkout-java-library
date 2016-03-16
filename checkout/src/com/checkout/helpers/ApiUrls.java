@@ -20,5 +20,9 @@ public class ApiUrls {
 	public static final String CAPTURE_CHARGE=String.format(AppSettings.baseApiUrl,"charges/%s/capture");
 	public static final String VOID_CHARGE=String.format(AppSettings.baseApiUrl,"charges/%s/void");
 	public static final String CHARGE_HISTORY=String.format(AppSettings.baseApiUrl,"charges/%s/history");
-
+	public static final String RECURRING_PAYMENTS=String.format(AppSettings.baseApiUrl,"recurringPayments/plans");
+	public static final String RECURRING_PAYMENTS_UPDATE=String.format(AppSettings.baseApiUrl,"recurringPayments/plans/%s");
+	public static final String RECURRING_PAYMENTS_SEARCH=String.format(AppSettings.baseApiUrl,"recurringPayments/plans/search");
+	public static final String CUSTOMER_PAYMENT_PLAN_UPDATE=String.format(AppSettings.baseApiUrl,"recurringPayments/customers/%s");
+	
 }
