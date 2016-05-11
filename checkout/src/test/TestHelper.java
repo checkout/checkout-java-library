@@ -23,6 +23,7 @@ import com.checkout.api.services.shared.Product;
 import com.checkout.api.services.token.request.PaymentTokenCreate;
 
 public class TestHelper {
+	public static String secretKey = "sk_test_32b9cb39-1cd6-4f86-b750-7069a133667d";
 	
 	public static String getRandomEmail(){
 		 return UUID.randomUUID().toString()+"@test.com";

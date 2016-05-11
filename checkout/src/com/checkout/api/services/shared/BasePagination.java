@@ -8,4 +8,6 @@ public class BasePagination
     public int offset;
     public Date fromDate;
     public Date toDate;
+    public int pageSize;
+    public String pageNumber;
 }
