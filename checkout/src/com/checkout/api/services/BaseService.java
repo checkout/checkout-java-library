@@ -2,6 +2,7 @@ package com.checkout.api.services;
 
 import com.checkout.helpers.ApiHttpClient;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class BaseService {
 	
@@ -9,7 +10,7 @@ public class BaseService {
 	protected Gson gson;
 	
 	protected BaseService(){
-		gson = new Gson();
+		gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").create();
 		httpClient = new ApiHttpClient(gson);
 	}
 }

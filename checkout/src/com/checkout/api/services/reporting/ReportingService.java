@@ -20,11 +20,11 @@ public class ReportingService extends BaseService{
 	
 	public Response<TransactionList> queryTransaction(TransactionQuery requestModel) throws IOException,JsonSyntaxException {
 		String apiUrl=ApiUrls.REPORTING_TRANSACTIONS;
-		return httpClient.getRequest(apiUrl,AppSettings.secretKey, TransactionList.class);
+		return httpClient.postRequest(apiUrl,AppSettings.secretKey, gson.toJson(requestModel), TransactionList.class);
 	}
 	
 	public Response<ChargebackList> queryChargeback(ChargebackQuery requestModel) throws IOException,JsonSyntaxException {
 		String apiUrl=ApiUrls.REPORTING_CHARGEBACKS;
-		return httpClient.getRequest(apiUrl,AppSettings.secretKey, ChargebackList.class);
+		return httpClient.postRequest(apiUrl,AppSettings.secretKey, gson.toJson(requestModel), ChargebackList.class);
 	}
 }
