@@ -17,9 +17,14 @@ import com.checkout.api.services.charge.request.DefaultCardCharge;
 import com.checkout.api.services.customer.request.BaseCustomer;
 import com.checkout.api.services.customer.request.CustomerCreate;
 import com.checkout.api.services.customer.request.CustomerUpdate;
+import com.checkout.api.services.reporting.request.ChargebackQuery;
+import com.checkout.api.services.reporting.request.TransactionQuery;
 import com.checkout.api.services.shared.Address;
+import com.checkout.api.services.shared.Filter;
 import com.checkout.api.services.shared.Phone;
 import com.checkout.api.services.shared.Product;
+import com.checkout.api.services.shared.SortColumn;
+import com.checkout.api.services.shared.SortOrder;
 import com.checkout.api.services.token.request.PaymentTokenCreate;
 
 public class TestHelper {
@@ -288,5 +293,35 @@ public class TestHelper {
 		baseChargeInfo.udf5=getRandomString().substring(20);
 		
 		return baseChargeInfo;
+	}
+	
+	public static TransactionQuery getQueryTransactionModel(String searchValue, Date fromDate, Date toDate, SortColumn sortColumn, SortOrder sortOrder, Integer pageSize, String pageNumber, List<Filter> filters) {
+		TransactionQuery query = new TransactionQuery();
+		
+		query.fromDate = fromDate;
+		query.toDate = toDate;
+		query.pageSize = pageSize;
+		query.pageNumber = pageNumber;
+		query.sortColumn = sortColumn;
+		query.sortOrder = sortOrder;
+		query.search = searchValue;
+		query.filters = filters;
+		
+		return query;
+	}
+	
+	public static ChargebackQuery getQueryChargebackModel(String searchValue, Date fromDate, Date toDate, SortColumn sortColumn, SortOrder sortOrder, Integer pageSize, String pageNumber, List<Filter> filters) {
+		ChargebackQuery query = new ChargebackQuery();
+		
+		query.fromDate = fromDate;
+		query.toDate = toDate;
+		query.pageSize = pageSize;
+		query.pageNumber = pageNumber;
+		query.sortColumn = sortColumn;
+		query.sortOrder = sortOrder;
+		query.search = searchValue;
+		query.filters = filters;
+		
+		return query;
 	}
 }
