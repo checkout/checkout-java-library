@@ -1,6 +1,6 @@
-package com.checkout.api.services.shared;
+package com.checkout.api.services.reporting.request;
 
-public enum SortColumn {
+public enum TransactionSortColumn {
     Date,
     Id,
     OriginId,

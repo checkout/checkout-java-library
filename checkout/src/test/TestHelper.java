@@ -17,13 +17,15 @@ import com.checkout.api.services.charge.request.DefaultCardCharge;
 import com.checkout.api.services.customer.request.BaseCustomer;
 import com.checkout.api.services.customer.request.CustomerCreate;
 import com.checkout.api.services.customer.request.CustomerUpdate;
+import com.checkout.api.services.reporting.request.ChargebackFilter;
 import com.checkout.api.services.reporting.request.ChargebackQuery;
+import com.checkout.api.services.reporting.request.ChargebackSortColumn;
+import com.checkout.api.services.reporting.request.TransactionFilter;
 import com.checkout.api.services.reporting.request.TransactionQuery;
+import com.checkout.api.services.reporting.request.TransactionSortColumn;
 import com.checkout.api.services.shared.Address;
-import com.checkout.api.services.shared.Filter;
 import com.checkout.api.services.shared.Phone;
 import com.checkout.api.services.shared.Product;
-import com.checkout.api.services.shared.SortColumn;
 import com.checkout.api.services.shared.SortOrder;
 import com.checkout.api.services.token.request.PaymentTokenCreate;
 
@@ -295,7 +297,7 @@ public class TestHelper {
 		return baseChargeInfo;
 	}
 	
-	public static TransactionQuery getQueryTransactionModel(String searchValue, Date fromDate, Date toDate, SortColumn sortColumn, SortOrder sortOrder, Integer pageSize, String pageNumber, List<Filter> filters) {
+	public static TransactionQuery getQueryTransactionModel(String searchValue, Date fromDate, Date toDate, TransactionSortColumn sortColumn, SortOrder sortOrder, Integer pageSize, String pageNumber, List<TransactionFilter> filters) {
 		TransactionQuery query = new TransactionQuery();
 		
 		query.fromDate = fromDate;
@@ -310,7 +312,7 @@ public class TestHelper {
 		return query;
 	}
 	
-	public static ChargebackQuery getQueryChargebackModel(String searchValue, Date fromDate, Date toDate, SortColumn sortColumn, SortOrder sortOrder, Integer pageSize, String pageNumber, List<Filter> filters) {
+	public static ChargebackQuery getQueryChargebackModel(String searchValue, Date fromDate, Date toDate, ChargebackSortColumn sortColumn, SortOrder sortOrder, Integer pageSize, String pageNumber, List<ChargebackFilter> filters) {
 		ChargebackQuery query = new ChargebackQuery();
 		
 		query.fromDate = fromDate;
