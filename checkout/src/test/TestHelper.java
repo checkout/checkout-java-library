@@ -6,6 +6,7 @@ import com.checkout.api.services.card.request.CardCreate;
 import com.checkout.api.services.card.request.CardUpdate;
 import com.checkout.api.services.charge.request.BaseCharge;
 import com.checkout.api.services.charge.request.BaseChargeInfo;
+import com.checkout.api.services.charge.request.BillingDescriptor;
 import com.checkout.api.services.charge.request.CardCharge;
 import com.checkout.api.services.charge.request.CardIdCharge;
 import com.checkout.api.services.charge.request.CardTokenCharge;
@@ -271,6 +272,10 @@ public class TestHelper {
 		baseCharge.customerIp="82.23.168.254";
 		baseCharge.customerName = "Test Customer";
 		baseCharge.description= getRandomString().substring(20);
+		BillingDescriptor descriptor = new BillingDescriptor();
+		descriptor.name = "Amigo ltd.";
+		descriptor.city = "London";
+		baseCharge.descriptor = descriptor;
 		baseCharge.metadata = getRandomMetadata();
 		baseCharge.products = getRandomProducts();
 		baseCharge.shippingDetails = getRandomAddress();
