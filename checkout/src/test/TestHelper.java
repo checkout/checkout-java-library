@@ -272,10 +272,9 @@ public class TestHelper {
 		baseCharge.customerIp="82.23.168.254";
 		baseCharge.customerName = "Test Customer";
 		baseCharge.description= getRandomString().substring(20);
-		BillingDescriptor descriptor = new BillingDescriptor();
-		descriptor.name = "Amigo ltd.";
-		descriptor.city = "London";
-		baseCharge.descriptor = descriptor;
+		baseCharge.descriptor = new BillingDescriptor();
+		baseCharge.descriptor.name = "Amigo ltd.";
+		baseCharge.descriptor.city = "London";
 		baseCharge.metadata = getRandomMetadata();
 		baseCharge.products = getRandomProducts();
 		baseCharge.shippingDetails = getRandomAddress();
