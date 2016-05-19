@@ -4,8 +4,10 @@ import java.util.Date;
 
 public class BasePagination
 {
-    public int count;
-    public int offset;
+    public Integer count;
+    public Integer offset;
     public Date fromDate;
     public Date toDate;
+    public Integer pageSize;
+    public String pageNumber;
 }

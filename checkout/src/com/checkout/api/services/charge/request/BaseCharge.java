@@ -26,4 +26,5 @@ public class BaseCharge extends BaseChargeInfo{
 	public List<Product> products;
 	public Address shippingDetails;
 	public String redirectUrl;
+	public BillingDescriptor descriptor;
 }
