@@ -26,8 +26,21 @@ public class APIClient {
 		AppSettings.readTimeout=readTimeout;
 	}	
 	
+	public APIClient(String secretKey, String publicKey, Environment env, boolean debugMode,int connectTimeout,int readTimeout) throws IOException{
+		this(secretKey,publicKey,env,debugMode);
+		
+		AppSettings.connectTimeout=connectTimeout;
+		AppSettings.readTimeout=readTimeout;
+	}	
+	
 	public APIClient(String secretKey,Environment env,boolean debugMode) throws IOException{
 		this(secretKey,env);
+		
+		AppSettings.debugMode=debugMode;
+	}
+	
+	public APIClient(String secretKey, String publicKey, Environment env,boolean debugMode) throws IOException{
+		this(secretKey,publicKey,env);
 		
 		AppSettings.debugMode=debugMode;
 	}
@@ -39,15 +52,35 @@ public class APIClient {
 		 ApiHttpClient.SetupLogger();
 		 SetupServices();
 	}
+	
+	public APIClient(String secretKey,String publicKey,Environment env)throws IOException{
+		 AppSettings.secretKey=secretKey;
+		 AppSettings.publicKey=publicKey;
+		 
+		 AppSettings.SetEnvironment(env); 
+		 ApiHttpClient.SetupLogger();
+		 SetupServices();
+	}
 
 	public APIClient(String secretKey,boolean debugMode) throws IOException{			
 		this(secretKey,Environment.SANDBOX,true);
 	}
 	
+	public APIClient(String secretKey,String publicKey,boolean debugMode) throws IOException{			
+		this(secretKey,publicKey,Environment.SANDBOX,true);
+	}
 	
 	public APIClient(String secretKey) throws IOException{			
 		 AppSettings.secretKey=secretKey;
 		 
+		 AppSettings.SetEnvironment(Environment.SANDBOX);
+		 ApiHttpClient.SetupLogger();	
+		 SetupServices();
+	}
+	
+	public APIClient(String secretKey, String publicKey) throws IOException{			
+		 AppSettings.secretKey=secretKey;
+		 AppSettings.publicKey=publicKey;
 		 AppSettings.SetEnvironment(Environment.SANDBOX);
 		 ApiHttpClient.SetupLogger();	
 		 SetupServices();

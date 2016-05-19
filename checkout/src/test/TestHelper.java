@@ -29,9 +29,11 @@ import com.checkout.api.services.shared.Phone;
 import com.checkout.api.services.shared.Product;
 import com.checkout.api.services.shared.SortOrder;
 import com.checkout.api.services.token.request.PaymentTokenCreate;
+import com.checkout.api.services.token.request.VisaCheckoutTokenCreate;
 
 public class TestHelper {
 	public static String secretKey = "sk_test_32b9cb39-1cd6-4f86-b750-7069a133667d";
+	public static String publicKey = "pk_test_2997d616-471e-48a5-ba86-c775ed3ac38a";
 	
 	public static String getRandomEmail(){
 		 return UUID.randomUUID().toString()+"@test.com";
@@ -130,6 +132,14 @@ public class TestHelper {
 		tokenPayload.metadata = getRandomMetadata(); 
 		tokenPayload.products = getRandomProducts();
 		tokenPayload.shippingDetails = getRandomAddress();
+		
+		return tokenPayload;
+	}
+	
+	public static VisaCheckoutTokenCreate getVisaCheckoutTokenCreateModel(boolean includeBinData) {
+		VisaCheckoutTokenCreate tokenPayload = new VisaCheckoutTokenCreate();
+		tokenPayload.callId = "3023957850660287501";
+		tokenPayload.includeBinData = includeBinData;
 		
 		return tokenPayload;
 	}
