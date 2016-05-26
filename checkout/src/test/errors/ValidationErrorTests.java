@@ -13,13 +13,15 @@ import com.checkout.api.services.token.request.PaymentTokenCreate;
 import com.checkout.api.services.token.response.PaymentToken;
 import com.google.gson.JsonSyntaxException;
 
+import test.TestHelper;
+
 public class ValidationErrorTests {
 
 	APIClient ckoClient;
 	
 	@Before
 	public void setUp() throws Exception {
-		ckoClient = new APIClient("sk_CC937715-4F68-4306-BCBE-640B249A4D50",true);
+		ckoClient = new APIClient(TestHelper.secretKey,true);
 		
 	}
 

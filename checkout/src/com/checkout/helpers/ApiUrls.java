@@ -4,6 +4,7 @@ public class ApiUrls {
 
 	
 	public static final String PAYMENT_TOKENS = String.format(AppSettings.baseApiUrl, "tokens/payment");
+	public static final String VISACHECKOUT_TOKENS = String.format(AppSettings.baseApiUrl, "tokens/card/visa-checkout");
 	
 	public static final String CUSTOMERS = String.format(AppSettings.baseApiUrl, "customers");
 	public static final String CUSTOMER = String.format(AppSettings.baseApiUrl, "customers/%s");
@@ -20,5 +21,7 @@ public class ApiUrls {
 	public static final String CAPTURE_CHARGE=String.format(AppSettings.baseApiUrl,"charges/%s/capture");
 	public static final String VOID_CHARGE=String.format(AppSettings.baseApiUrl,"charges/%s/void");
 	public static final String CHARGE_HISTORY=String.format(AppSettings.baseApiUrl,"charges/%s/history");
-
+	
+	public static final String REPORTING_TRANSACTIONS=String.format(AppSettings.baseApiUrl,"reporting/transactions");
+	public static final String REPORTING_CHARGEBACKS=String.format(AppSettings.baseApiUrl,"reporting/chargebacks");
 }
