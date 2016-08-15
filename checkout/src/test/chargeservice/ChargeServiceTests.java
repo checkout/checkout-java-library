@@ -47,7 +47,7 @@ public class ChargeServiceTests {
 	@Test
 	public void verifyChargeByPaymentToken() throws JsonSyntaxException, IOException {		
 		
-		String paymentToken ="pay_tok_4bf11f31-ae5f-4ac6-a942-2105f0f41860";// payment token for the JS charge
+		String paymentToken ="pay_tok_4bf11f31-ae5f-4ac6-a942-2105f0f41860";// set payment token for the JS charge
 		
 		Response<Charge> chargeResponse = ckoClient.chargeService.verifyCharge(paymentToken);
 		
@@ -60,7 +60,7 @@ public class ChargeServiceTests {
 	@Test
 	public void chargeWithCardToken() throws JsonSyntaxException, IOException, InstantiationException, IllegalAccessException {		
 				
-		String cardToken ="card_tok_220E97F3-4DA3-4F09-B7AE-C633D8D5E3E2";// card token for charge
+		String cardToken ="card_tok_220E97F3-4DA3-4F09-B7AE-C633D8D5E3E2";// set card token for charge
 		
 		CardTokenCharge payload = TestHelper.getCardTokenChargeModel(cardToken);
 		
