@@ -29,11 +29,13 @@ import com.checkout.api.services.shared.Phone;
 import com.checkout.api.services.shared.Product;
 import com.checkout.api.services.shared.SortOrder;
 import com.checkout.api.services.token.request.PaymentTokenCreate;
+import com.checkout.api.services.token.request.PaymentTokenUpdate;
 import com.checkout.api.services.token.request.VisaCheckoutTokenCreate;
 
 public class TestHelper {
 	public static String secretKey = "sk_test_32b9cb39-1cd6-4f86-b750-7069a133667d";
 	public static String publicKey = "pk_test_2997d616-471e-48a5-ba86-c775ed3ac38a";
+	public static Random randomNumber = new Random();
 	
 	public static String getRandomEmail(){
 		 return UUID.randomUUID().toString()+"@test.com";
@@ -42,9 +44,9 @@ public class TestHelper {
 	{
 		char[] chars = "abcdefghijklmnopqrstuvwxyz".toCharArray();
 		StringBuilder sb = new StringBuilder();
-		Random random = new Random();
+		
 		for (int i = 0; i < chars.length; i++) {
-		    char c = chars[random.nextInt(chars.length)];
+		    char c = chars[randomNumber.nextInt(chars.length)];
 		    sb.append(c);
 		}
 		String output = sb.toString();
@@ -100,14 +102,13 @@ public class TestHelper {
 	}
 	public static Phone getRandomPhone() {
 
-		Random random = new Random();
 		StringBuilder sb = new StringBuilder();
 		Phone phone = new Phone();
 		
 		char[] chars = "1234567890".toCharArray();
 		
 		for (int i = 0; i < chars.length; i++) {
-		    char c = chars[random.nextInt(chars.length)];
+		    char c = chars[randomNumber.nextInt(chars.length)];
 		    sb.append(c);
 		}
 		
@@ -122,9 +123,8 @@ public class TestHelper {
 	 */
 	public static PaymentTokenCreate getPaymentTokenCreateModel(){
 		PaymentTokenCreate tokenPayload=new PaymentTokenCreate();
-		Random random = new Random();
-		
-		tokenPayload.value=Integer.toString(random.nextInt(1000));
+				
+		tokenPayload.value=Integer.toString(randomNumber.nextInt(1000));
 		tokenPayload.currency="USD";
 		tokenPayload.autoCapture="N";
 		tokenPayload.customerIp="88.216.3.135";
@@ -134,6 +134,20 @@ public class TestHelper {
 		tokenPayload.shippingDetails = getRandomAddress();
 		
 		return tokenPayload;
+	}
+	
+	public static PaymentTokenUpdate getPaymentTokenUpdateModel(){
+		PaymentTokenUpdate tokenUpdatePayload=new PaymentTokenUpdate();
+		
+		tokenUpdatePayload.trackId= "TRK123456";
+		tokenUpdatePayload.metadata = getRandomMetadata();
+		tokenUpdatePayload.udf1=getRandomString().substring(20);
+		tokenUpdatePayload.udf2=getRandomString().substring(20);
+		tokenUpdatePayload.udf3=getRandomString().substring(20);
+		tokenUpdatePayload.udf4=getRandomString().substring(20);
+		tokenUpdatePayload.udf5=getRandomString().substring(20); 
+		
+		return tokenUpdatePayload;
 	}
 	
 	public static VisaCheckoutTokenCreate getVisaCheckoutTokenCreateModel(boolean includeBinData) {

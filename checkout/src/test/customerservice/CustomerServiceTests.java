@@ -73,12 +73,12 @@ public class CustomerServiceTests {
 	public void GetCustomerListRequestTest() throws JsonSyntaxException, IOException, InstantiationException, IllegalAccessException {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(new Date()); 
-     	cal.add(Calendar.SECOND, -30);
+     	cal.add(Calendar.MINUTE, +1);
      	
 		CustomerListGet customerListRequest =new CustomerListGet();
 		customerListRequest.count = 2;
 		customerListRequest.offset = 1;
-		customerListRequest.fromDate = cal.getTime(); 
+		customerListRequest.fromDate = new Date(); 
 		    
 		CustomerCreate customerCreatePayload1= TestHelper.getCustomerCreateModel();
 		CustomerCreate customerCreatePayload2= TestHelper.getCustomerCreateModel();
@@ -86,7 +86,7 @@ public class CustomerServiceTests {
 		Response<Customer> customerCreateResponse1 = ckoClient.customerService.createCustomer(customerCreatePayload1);
 		Response<Customer> customerCreateResponse2 = ckoClient.customerService.createCustomer(customerCreatePayload2);
 	    
-		customerListRequest.toDate = new Date();
+		customerListRequest.toDate = cal.getTime();
 		
 		Response<CustomerList> customerListResponse = ckoClient.customerService.getCustomerList(customerListRequest);
 
