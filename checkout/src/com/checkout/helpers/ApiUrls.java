@@ -4,6 +4,7 @@ public class ApiUrls {
 
 	
 	public static final String PAYMENT_TOKENS = String.format(AppSettings.baseApiUrl, "tokens/payment");
+	public static final String PAYMENT_TOKEN = String.format(AppSettings.baseApiUrl, "tokens/payment/%s");
 	public static final String VISACHECKOUT_TOKENS = String.format(AppSettings.baseApiUrl, "tokens/card/visa-checkout");
 	
 	public static final String CUSTOMERS = String.format(AppSettings.baseApiUrl, "customers");
