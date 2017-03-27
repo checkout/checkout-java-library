@@ -20,7 +20,6 @@ import net.sf.json.JSONObject;
 
 public class ApiHttpClient {
 	Gson gson;
-	HttpURLConnection connection = null;
 	int httpStatus = 0;
 	static Logger logger=null;
 	
@@ -48,6 +47,7 @@ public class ApiHttpClient {
 		T jsonObject = null;
 		BufferedReader reader = null;
 		OutputStreamWriter outputStreamWriter=null;
+		HttpURLConnection connection = null;
 		
 		URL url = new URL(uri);
 		
