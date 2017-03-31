@@ -8,4 +8,5 @@ public class CardIdCharge extends BaseCharge {
 	
 	public String transactionIndicator;
 	public String cardId;
+	public String cvv;
 }
