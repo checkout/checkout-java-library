@@ -7,7 +7,6 @@ public class Charge extends BaseCharge {
 	public String id;
 	public String liveMode;
 	public String created;
-	public String customerId;
 	public String transactionIndicator;
 	public Card card;
 	public String responseMessage;

@@ -5,8 +5,7 @@ import com.checkout.api.services.shared.Address;
 
 
 public class PaymentTokenCreate extends BaseCharge{
-	public Address shippingDetails;
-	
+
 	public PaymentTokenCreate(){
 
 	}
