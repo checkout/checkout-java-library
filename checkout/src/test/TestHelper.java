@@ -231,6 +231,21 @@ public class TestHelper {
 		
 		return  cardCharge;
 	}
+	public static CardCharge getCardChargeModelAttemptN3d() throws InstantiationException, IllegalAccessException {
+		CardCharge cardCharge = getBaseChargeModel(CardCharge.class);
+		cardCharge.value = "100150"; // To trigger "Card not 3DS Enabled" https://docs.checkout.com/getting-started/testing-and-simulating-charges
+
+		cardCharge.transactionIndicator = "1";
+		cardCharge.chargeMode = 2;
+		cardCharge.attemptN3D = true;
+		cardCharge.card =getCardCreateModel();
+        cardCharge.card.number = "378282246310005"; // We need to use a test card other than Visa, else normal 10000 response code will be returned
+        cardCharge.card.expiryMonth = "06";
+        cardCharge.card.expiryYear = "2018";
+        cardCharge.card.cvv = "1000";
+
+		return  cardCharge;
+	}
 	public static ChargeUpdate getChargeUpdateModel() throws InstantiationException, IllegalAccessException {
 		ChargeUpdate chargeUpdate =new ChargeUpdate();
 		
