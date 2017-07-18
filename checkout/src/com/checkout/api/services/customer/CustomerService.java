@@ -30,13 +30,23 @@ public class CustomerService extends BaseService{
 
 	public Response<OkResponse> updateCustomer(String customerId, CustomerUpdate payload) throws IOException,JsonSyntaxException{
 		String apiUrl=String.format(ApiUrls.CUSTOMER, customerId);
+
+        if (customerId.contains("@"))
+        {
+            apiUrl=String.format(ApiUrls.CUSTOMER_EMAIL, customerId);
+        }
 		
 		return httpClient.putRequest(apiUrl, AppSettings.secretKey, gson.toJson(payload),OkResponse.class);
 	}
 
 	public Response<Customer> getCustomer(String customerId)  throws IOException,JsonSyntaxException {
 		String apiUrl=String.format(ApiUrls.CUSTOMER, customerId);
-		
+
+		if (customerId.contains("@"))
+        {
+            apiUrl=String.format(ApiUrls.CUSTOMER_EMAIL, customerId);
+        }
+
 		return httpClient.getRequest(apiUrl, AppSettings.secretKey, Customer.class);
 	}
 

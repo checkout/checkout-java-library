@@ -9,6 +9,7 @@ public class ApiUrls {
 	
 	public static final String CUSTOMERS = String.format(AppSettings.baseApiUrl, "customers");
 	public static final String CUSTOMER = String.format(AppSettings.baseApiUrl, "customers/%s");
+	public static final String CUSTOMER_EMAIL = String.format(AppSettings.baseApiUrl, "customers?email=%s");
 	
 	public static final String CARDS=String.format(AppSettings.baseApiUrl,"customers/%s/cards");
 	public static final String CARD=String.format(AppSettings.baseApiUrl,"customers/%s/cards/%s");
