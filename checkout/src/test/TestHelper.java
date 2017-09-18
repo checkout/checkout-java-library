@@ -34,7 +34,7 @@ import com.checkout.api.services.token.request.VisaCheckoutTokenCreate;
 
 public class TestHelper {
 	public static String secretKey = "sk_test_32b9cb39-1cd6-4f86-b750-7069a133667d";
-	public static String publicKey = "pk_test_2997d616-471e-48a5-ba86-c775ed3ac38a";
+	public static String publicKey = "pk_test_763e0a06-2eb2-4ac0-8099-65009064bded";
 	public static Random randomNumber = new Random();
 	
 	public static String getRandomEmail(){

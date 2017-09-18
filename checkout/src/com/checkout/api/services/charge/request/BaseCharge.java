@@ -28,4 +28,5 @@ public class BaseCharge extends BaseChargeInfo{
 	public String redirectUrl;
 	public BillingDescriptor descriptor;
 	public boolean attemptN3D;
+	public boolean riskCheck;
 }
