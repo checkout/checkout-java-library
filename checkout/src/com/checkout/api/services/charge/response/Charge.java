@@ -19,7 +19,7 @@ public class Charge extends BaseCharge {
     /*
      * 3D Secure charge verification specific fields
     */
-	public String enrolled;
+    public String enrolled;
     public String signatureValid;
     public String authenticationResponse;
     public String eci;
