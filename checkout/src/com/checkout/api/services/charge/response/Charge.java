@@ -16,13 +16,13 @@ public class Charge extends BaseCharge {
 	public boolean isCascaded;
 	public String authCode;
 
-    /*
-     * 3D Secure charge verification specific fields
-    */
-    public String enrolled;
-    public String signatureValid;
-    public String authenticationResponse;
-    public String eci;
-    public String cavv;
-    public String xid;
+	/*
+	 * 3D Secure charge verification specific fields
+	*/
+	public String enrolled;
+	public String signatureValid;
+	public String authenticationResponse;
+	public String eci;
+	public String cavv;
+	public String xid;
 }
