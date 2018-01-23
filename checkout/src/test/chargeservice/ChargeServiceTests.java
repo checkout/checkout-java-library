@@ -226,6 +226,19 @@ public class ChargeServiceTests {
 		
 		validateBaseCharge3ds(payload, charge);	
 	}
+
+    @Test
+    public void createChargeWithCardAttemptN3d() throws JsonSyntaxException, IOException, InstantiationException, IllegalAccessException {
+        CardCharge payload =TestHelper.getCardChargeModelAttemptN3d();
+
+        Response<Charge> chargeResponse= ckoClient.chargeService.chargeWithCard(payload);
+        Charge charge = chargeResponse.model;
+
+        assertEquals(false, chargeResponse.hasError);
+        assertEquals(200, chargeResponse.httpStatus);
+
+        validateBaseChargeAttemptN3d(payload, charge);
+    }
 	
 	@Test
 	public void getChargeHistory() throws JsonSyntaxException, IOException, InstantiationException, IllegalAccessException {
@@ -280,6 +293,13 @@ public class ChargeServiceTests {
 		assertNotNull(charge.redirectUrl);
 		assertEquals(charge.responseCode,"10000");
 		assertEquals(payload.chargeMode,charge.chargeMode);
+	}
+
+	private void validateBaseChargeAttemptN3d(BaseCharge payload, Charge charge) {
+		assertNotNull(charge.id);
+		assertNotNull(charge.redirectUrl);
+		assertEquals(charge.responseCode,"10000");
+        assertEquals(charge.chargeMode,1);
 	}
 	
 	/*
