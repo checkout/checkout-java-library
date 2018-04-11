@@ -18,6 +18,7 @@ import com.checkout.api.services.charge.request.DefaultCardCharge;
 import com.checkout.api.services.customer.request.BaseCustomer;
 import com.checkout.api.services.customer.request.CustomerCreate;
 import com.checkout.api.services.customer.request.CustomerUpdate;
+import com.checkout.api.services.payouts.request.BasePayout;
 import com.checkout.api.services.reporting.request.ChargebackFilter;
 import com.checkout.api.services.reporting.request.ChargebackQuery;
 import com.checkout.api.services.reporting.request.ChargebackSortColumn;
@@ -368,5 +369,17 @@ public class TestHelper {
 		query.filters = filters;
 		
 		return query;
+	}
+
+	public static BasePayout getPayoutModel(String cardId) throws InstantiationException, IllegalAccessException {
+		BasePayout basePayout = new BasePayout();
+
+        basePayout.destination = cardId;
+        basePayout.value = 200;
+        basePayout.currency = "USD";
+        basePayout.firstName = "John";
+        basePayout.lastName = "Doe";
+
+		return  basePayout;
 	}
 }
