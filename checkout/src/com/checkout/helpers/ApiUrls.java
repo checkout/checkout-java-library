@@ -29,4 +29,6 @@ public class ApiUrls {
 
 	public static final String BINLOOKUP = String.format(AppSettings.baseApiUrl,"lookups/bins/%s");
 	public static final String BINLOOKUP_CARDTOKEN = String.format(AppSettings.baseApiUrl,"tokens/%s");
+
+	public static final String PAYOUTS = String.format(AppSettings.baseApiUrl,"payouts");
 }
