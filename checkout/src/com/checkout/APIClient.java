@@ -8,6 +8,7 @@ import com.checkout.api.services.customer.CustomerService;
 import com.checkout.api.services.reporting.ReportingService;
 import com.checkout.api.services.token.TokenService;
 import com.checkout.api.services.lookups.LookupsService;
+import com.checkout.api.services.payouts.PayoutsService;
 import com.checkout.helpers.ApiHttpClient;
 import com.checkout.helpers.AppSettings;
 import com.checkout.helpers.Environment;
@@ -20,6 +21,7 @@ public class APIClient {
 	public CardService cardService;
 	public ReportingService reportingService;
     public LookupsService lookupsService;
+    public PayoutsService payoutsService;
 	
 	public APIClient(String secretKey,Environment env, boolean debugMode,int connectTimeout,int readTimeout) throws IOException{
 		this(secretKey,env,debugMode);
@@ -95,6 +97,7 @@ public class APIClient {
 		cardService=new CardService();
 		reportingService=new ReportingService();
         lookupsService=new LookupsService();
+        payoutsService=new PayoutsService();
 	}
 	
 	public static void main(String[] args) 

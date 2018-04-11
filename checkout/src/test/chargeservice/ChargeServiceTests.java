@@ -287,7 +287,7 @@ public class ChargeServiceTests {
         assertEquals(chargeResponse.model.id, captureResponse.model.originalId);
         assertEquals(refundResponse.model.originalId, captureResponse.model.id);
     }
-	
+
 	private void validateBaseCharge3ds(BaseCharge payload, Charge charge) {
 		assertNotNull(charge.id);
 		assertNotNull(charge.redirectUrl);
