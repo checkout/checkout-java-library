@@ -6,7 +6,6 @@ public class CardTokenCharge extends BaseCharge
 		super();
 	}
 	
-	public String transactionIndicator;	
 	public String cardToken;
 }
 

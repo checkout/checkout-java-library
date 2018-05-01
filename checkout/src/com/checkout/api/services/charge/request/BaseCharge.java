@@ -29,4 +29,7 @@ public class BaseCharge extends BaseChargeInfo{
 	public BillingDescriptor descriptor;
 	public boolean attemptN3D;
 	public boolean riskCheck;
+	public String transactionIndicator;
+	public boolean cardOnFile;
+	public String previousChargeId;
 }
