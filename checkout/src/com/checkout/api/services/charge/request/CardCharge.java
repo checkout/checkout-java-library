@@ -7,6 +7,5 @@ public class CardCharge extends BaseCharge {
 		super();
 	}
 	
-	public String transactionIndicator;
 	public CardCreate card;
 }

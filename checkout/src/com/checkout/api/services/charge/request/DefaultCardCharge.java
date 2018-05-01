@@ -5,6 +5,5 @@ public class DefaultCardCharge extends BaseCharge {
 		super();
 	}
 	
-	public String transactionIndicator;
 	public String cvv;
 }
