@@ -49,6 +49,7 @@ public class ValidationErrorTests {
 		assertEquals(true, tokenResponse.error.errorCode.equals("70000"));
 		assertEquals(true,tokenResponse.error.message.contains("Validation"));
 		assertNotNull(tokenResponse.error.errors);
+		assertNotNull(tokenResponse.error.errorMessageCodes);
 	}
 	
 }
