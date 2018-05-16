@@ -8,4 +8,5 @@ public class ResponseError {
 	public String message;
 	public String eventId;
 	public List<String> errors;
+	public List<String> errorMessageCodes;
 }
