@@ -21,6 +21,7 @@ import com.checkout.api.services.charge.request.CardTokenCharge;
 import com.checkout.api.services.charge.request.ChargeCapture;
 import com.checkout.api.services.charge.request.ChargeRefund;
 import com.checkout.api.services.charge.request.ChargeVoid;
+import com.checkout.api.services.charge.request.RecipientDetails;
 import com.checkout.api.services.charge.request.DefaultCardCharge;
 import com.checkout.api.services.charge.response.Capture;
 import com.checkout.api.services.charge.response.Charge;
@@ -88,7 +89,26 @@ public class ChargeServiceTests {
 		validateBaseCharge(payload, charge);	
 		validateCard(payload.card, charge.card);
 	}
-	
+
+    @Test
+    public void createMeToMeChargeWithCard() throws JsonSyntaxException, IOException, InstantiationException, IllegalAccessException {
+        CardCharge payload =TestHelper.getCardChargeModel();
+        payload.currency = "gbp";
+        payload.recipientDetails = getRecipientDetails();;
+
+        payload.cardOnFile = true;
+
+        Response<Charge> chargeResponse= ckoClient.chargeService.chargeWithCard(payload);
+        Charge charge = chargeResponse.model;
+
+        assertEquals(false, chargeResponse.hasError);
+        assertEquals(200, chargeResponse.httpStatus);
+        assertEquals(payload.transactionIndicator,charge.transactionIndicator);
+
+        validateBaseCharge(payload, charge);
+        validateCard(payload.card, charge.card);
+    }
+
 	@Test
 	public void createChargeWithCardId() throws JsonSyntaxException, IOException, InstantiationException, IllegalAccessException {		
 	
@@ -370,5 +390,14 @@ public class ChargeServiceTests {
 		assertEquals(payload.udf3, charge.udf3);
 		assertEquals(payload.udf4, charge.udf4);
 		assertEquals(payload.udf5, charge.udf5);
+	}
+
+	private RecipientDetails getRecipientDetails() {
+		RecipientDetails recipientDetails = new RecipientDetails();
+		recipientDetails.dob = "19911230";
+		recipientDetails.accountNumber = "8573498821";
+		recipientDetails.partialPostcode = "W1T";
+		recipientDetails.surname = "Smith";
+		return recipientDetails;
 	}
 }
