@@ -32,4 +32,5 @@ public class BaseCharge extends BaseChargeInfo{
 	public String transactionIndicator;
 	public boolean cardOnFile;
 	public String previousChargeId;
+	public RecipientDetails recipientDetails;
 }
